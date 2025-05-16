@@ -102,8 +102,8 @@ class ClientController extends Controller
     public function destroy($id)
     {
         $client = Client::findOrFail($id);
-        $client->delete();
-
-        return response()->json(null, 204);
+        $client->status = false;
+        $client->save();
+        return response()->json([]);
     }
 }

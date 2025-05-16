@@ -12,9 +12,21 @@ class DocumentTypesTableSeeder extends Seeder
     public function run()
     {
         DB::table('document_types')->insert([
-            ['name' => 'DNI'],
-            ['name' => 'Pasaporte'],
-            ['name' => 'RUC'],
+            [
+                'name' => 'DNI',                
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Pasaporte',                 
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'RUC',                 
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
         ]);
     }
 }

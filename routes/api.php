@@ -20,4 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => []], function () {
     Route::apiResource('document-type', 'DocumentTypeController');
     Route::apiResource('client', 'ClientController');
+    Route::apiResource('order', 'OrderController');
+    Route::apiResource('order-details', 'OrderDetailController');
+    Route::apiResource('product', 'ProductController');
 });
