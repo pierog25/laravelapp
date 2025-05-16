@@ -9,7 +9,7 @@ class DocumentType extends Model
     protected $table = 'document_types';
 
     // Los campos que se pueden asignar masivamente
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'status'];
     
     protected $hidden = [
         'created_at',

@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\DocumentType;
+use App\Product;
 
 use Illuminate\Http\Request;
 
-class DocumentTypeController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class DocumentTypeController extends Controller
      */
     public function index()
     {
-        return response()->json(DocumentType::all());
+        return Product::all();
     }
 
     /**
@@ -26,12 +26,12 @@ class DocumentTypeController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:30',
+            'name' => 'required|string|max:50',
+            'abbreviation' => 'required|string|max:10'
         ]);
 
-        $documentType = DocumentType::create($validated);
-
-        return response()->json($documentType, 201);
+        $product = Product::create($validated);
+        return response()->json($product, 201);
     }
 
     /**
@@ -42,8 +42,7 @@ class DocumentTypeController extends Controller
      */
     public function show($id)
     {
-        $documentType = DocumentType::findOrFail($id);
-        return response()->json($documentType);
+        return Product::findOrFail($id);
     }
 
     /**
@@ -55,16 +54,16 @@ class DocumentTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $documentType = DocumentType::findOrFail($id);
-
         $validated = $request->validate([
-            'name' => 'required|string|max:30',
-            'status' => 'boolean',
+            'name' => 'required|string|max:50',
+            'abbreviation' => 'required|string|max:10',
+            'status' => 'nullable|boolean',
         ]);
 
-        $documentType->update($validated);
+        $product = Product::findOrFail($id);
+        $product->update($validated);
 
-        return response()->json($documentType);
+        return response()->json($product);
     }
 
     /**
@@ -75,7 +74,7 @@ class DocumentTypeController extends Controller
      */
     public function destroy($id)
     {
-        $client = DocumentType::findOrFail($id);
+        $client = Product::findOrFail($id);
         $client->status = false;
         $client->save();
         return response()->json([]);

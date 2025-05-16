@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\DocumentType;
 
 use Illuminate\Http\Request;
+use App\OrderDetail;
 
-class DocumentTypeController extends Controller
+class OrderDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class DocumentTypeController extends Controller
      */
     public function index()
     {
-        return response()->json(DocumentType::all());
+        return OrderDetail::with(['order', 'product'])->get();
     }
 
     /**
@@ -26,12 +26,14 @@ class DocumentTypeController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:30',
+            'product_id' => 'required|exists:products,id',
+            'order_id' => 'required|exists:orders,id',
+            'description' => 'nullable|string',
+            'quantity' => 'required|integer|min:1',
         ]);
 
-        $documentType = DocumentType::create($validated);
-
-        return response()->json($documentType, 201);
+        $detail = OrderDetail::create($validated);
+        return response()->json($detail, 201);
     }
 
     /**
@@ -42,8 +44,7 @@ class DocumentTypeController extends Controller
      */
     public function show($id)
     {
-        $documentType = DocumentType::findOrFail($id);
-        return response()->json($documentType);
+        return OrderDetail::with(['order', 'product'])->findOrFail($id);
     }
 
     /**
@@ -55,16 +56,18 @@ class DocumentTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $documentType = DocumentType::findOrFail($id);
-
-        $validated = $request->validate([
-            'name' => 'required|string|max:30',
-            'status' => 'boolean',
+         $validated = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'order_id' => 'required|exists:orders,id',
+            'description' => 'nullable|string',
+            'quantity' => 'required|integer|min:1',
+            'status'  => 'boolean',
         ]);
 
-        $documentType->update($validated);
+        $detail = OrderDetail::findOrFail($id);
+        $detail->update($validated);
 
-        return response()->json($documentType);
+        return response()->json($detail);
     }
 
     /**
@@ -75,7 +78,7 @@ class DocumentTypeController extends Controller
      */
     public function destroy($id)
     {
-        $client = DocumentType::findOrFail($id);
+        $client = OrderDetail::findOrFail($id);
         $client->status = false;
         $client->save();
         return response()->json([]);
