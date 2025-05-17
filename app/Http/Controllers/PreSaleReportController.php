@@ -112,7 +112,7 @@ class PreSaleReportController extends Controller
                 $results[] = $preSale->load('details');
             }
 
-            $order->status_order = "Cotizado";
+            $order->order_status = "Cotizado";
             $order->save();
             DB::commit();
 
