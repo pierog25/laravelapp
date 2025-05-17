@@ -25,7 +25,7 @@ class OrderController extends Controller
             ->with([
                 'client',
                 'user',
-                'order_details' => function ($query) {
+                'details' => function ($query) {
                     $query->where('status', true);
                 }
             ]);
@@ -60,10 +60,10 @@ class OrderController extends Controller
             'delivery_location' => 'required|string',
             'issue_date' => 'required|date',
             'user_id' => 'required|exists:users,id',
-            'details' => 'required|array|min:1',
-            'details.*.product_id' => 'required|exists:products,id',
-            'details.*.description' => 'nullable|string',
-            'details.*.quantity' => 'required|integer|min:1'
+            'order_details' => 'required|array|min:1',
+            'order_details.*.product_id' => 'required|exists:products,id',
+            'order_details.*.description' => 'nullable|string',
+            'order_details.*.quantity' => 'required|integer|min:1'
         ]);
 
         DB::beginTransaction();
@@ -79,7 +79,7 @@ class OrderController extends Controller
                 'status' => true
             ]);
 
-            foreach ($validated['details'] as $detail) {
+            foreach ($validated['order_details'] as $detail) {
                 $order->details()->create([
                     'product_id' => $detail['product_id'],
                     'description' => $detail['description'] ?? null,
@@ -95,13 +95,12 @@ class OrderController extends Controller
                 'msg' => 'Orden creada correctamente.',
                 'data' => $order->load(['client', 'user', 'details'])
             ], 201);
-
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
                 'success' => false,
                 'msg' => 'Ocurrió un error al crear la orden.',
-                'data' => []
+                'data' => $e->getMessage()
             ], 500);
         }
     }
@@ -145,7 +144,7 @@ class OrderController extends Controller
             'client_id' => 'required|exists:clients,id',
             'delivery_date' => 'required|date',
             'delivery_location' => 'required|string',
-            'order_status' => 'required|in:En Proceso,Pedido,Cotizado,Preventa,Pagado',
+            'order_status' => 'required|in:En Proceso,Pedido,Cotizado,Preventa,Pagado,Por Cotizar',
             'issue_date' => 'required|date',
             'user_id' => 'required|exists:users,id',
             'status'  => 'boolean',
@@ -162,7 +161,7 @@ class OrderController extends Controller
             $order = Order::findOrFail($id);
             $order->update($validated);
 
-            $existingDetails = $order->order_details()->where('status', true)->get();
+            $existingDetails = $order->details()->where('status', true)->get();
             $incomingIds = collect($validated['order_details'] ?? [])->pluck('id')->filter();
 
             // 1. Marcar como eliminados los detalles que ya existen pero no vienen en el update
@@ -186,7 +185,7 @@ class OrderController extends Controller
                         ]);
                     }
                 } else {
-                    $order->order_details()->create([
+                    $order->details()->create([
                         'product_id' => $detailData['product_id'],
                         'description' => $detailData['description'] ?? null,
                         'quantity' => $detailData['quantity'],
@@ -203,7 +202,7 @@ class OrderController extends Controller
                 'data' => $order->load([
                     'client',
                     'user',
-                    'order_details' => function ($query) {
+                    'details' => function ($query) {
                         $query->where('status', true);
                     }
                 ])
@@ -213,7 +212,7 @@ class OrderController extends Controller
             return response()->json([
                 'success' => false,
                 'msg' => 'Ocurrió un error al actualizar la orden.',
-                'data' => []
+                'data' => $e->getMessage()
             ], 500);
         }
     }
