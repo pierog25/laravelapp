@@ -28,7 +28,13 @@ class PreSaleReportController extends Controller
                 'client',
                 'user',
                 'details' => function ($query) {
-                    $query->where('status', true);
+                    $query->where('status', true)
+                        ->with(['preSaleReport' => function ($q) {
+                            $q->where('status', true)
+                                ->with(['details' => function ($d) {
+                                    $d->where('status', true);
+                                }]);
+                        }]);
                 }
             ]);
 
@@ -62,62 +68,90 @@ class PreSaleReportController extends Controller
             'details' => 'required|array|min:1',
             'details.*.order_detail_id' => 'required|exists:order_details,id',
             'details.*.details' => 'required|array|min:1',
+            'details.*.details.*.id' => 'nullable|exists:pre_sale_report_details,id',
             'details.*.details.*.resource' => 'required|string',
             'details.*.details.*.supplier_id' => 'required|exists:suppliers,id',
             'details.*.details.*.cost' => 'required|numeric|min:0'
         ]);
 
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
-            $order = Order::with('details')->findOrFail($validated['order_id']);
-            $orderDetails = $order->details->keyBy('id');
+            $order = Order::with('details.preSaleReport.details')->findOrFail($validated["order_id"]);
             $results = [];
 
-            foreach ($validated['details'] as $orderDetailData) {
-                $detailId = $orderDetailData['order_detail_id'];
+            // Indexar los OrderDetails por ID para acceso rápido
+            $orderDetailsMap = $order->details->keyBy('id');
 
-                if (!$orderDetails->has($detailId)) {
+            foreach ($validated['details'] as $detailGroup) {
+                $orderDetailId = $detailGroup['order_detail_id'];
+
+                if (!isset($orderDetailsMap[$orderDetailId])) {
                     continue;
                 }
 
-                $orderDetail = $orderDetails[$detailId];
+                $orderDetail = $orderDetailsMap[$orderDetailId];
                 $quantity = $orderDetail->quantity;
 
-                $preSale = PreSaleReport::create([
+                // Obtener o crear el PreSaleReport
+                $preSale = $orderDetail->preSaleReport ?? PreSaleReport::create([
                     'order_detail_id' => $orderDetail->id,
                     'unit_price' => 0,
                     'status' => true
                 ]);
 
+                // Indexar detalles actuales por ID
+                $existingDetails = $preSale->details->keyBy('id');
+                $usedDetailIds = [];
                 $totalCost = 0;
 
-                foreach ($orderDetailData['details'] as $detail) {
-                    $totalCost += $detail['cost'];
-
-                    PreSaleReportDetail::create([
-                        'pre_sale_report_id' => $preSale->id,
-                        'resource' => $detail['resource'],
-                        'supplier_id' => $detail['supplier_id'],
-                        'cost' => $detail['cost'],
-                        'status' => true
-                    ]);
+                foreach ($detailGroup['details'] as $detailInput) {
+                    if (!empty($detailInput['id']) && isset($existingDetails[$detailInput['id']])) {
+                        $detail = $existingDetails[$detailInput['id']];
+                        $detail->update([
+                            'resource' => $detailInput['resource'],
+                            'supplier_id' => $detailInput['supplier_id'],
+                            'cost' => $detailInput['cost'],
+                            'status' => true
+                        ]);
+                        $usedDetailIds[] = $detail->id;
+                        $totalCost += $detailInput['cost'];
+                    } else {
+                        $newDetail = PreSaleReportDetail::create([
+                            'pre_sale_report_id' => $preSale->id,
+                            'resource' => $detailInput['resource'],
+                            'supplier_id' => $detailInput['supplier_id'],
+                            'cost' => $detailInput['cost'],
+                            'status' => true
+                        ]);
+                        $usedDetailIds[] = $newDetail->id;
+                        $totalCost += $detailInput['cost'];
+                    }
                 }
 
+                // Marcar como eliminados los que ya no están
+                $preSale->details->whereNotIn('id', $usedDetailIds)->each(function ($detail) {
+                    $detail->update(['status' => false]);
+                });
+
+                // Recalcular precio unitario
                 $totalWithMargin = $totalCost * 1.3;
                 $unitPrice = $quantity > 0 ? round($totalWithMargin / $quantity, 2) : 0;
 
-                $preSale->unit_price = $unitPrice;
-                $preSale->save();
+                $preSale->update(['unit_price' => $unitPrice]);
 
-                $results[] = $preSale->load('details');
+                $results[] = $preSale->fresh([
+                    'details' => function ($query) {
+                        $query->where('status', true);
+                    }
+                ]);
             }
 
-            $order->status_order = "Cotizado";
+            $order->order_status = "Cotizado";
             $order->save();
             DB::commit();
 
             return response()->json([
-                'message' => 'Preventas creadas correctamente.',
+                'message' => 'Preventa actualizada correctamente.',
                 'data' => $results
             ], 201);
         } catch (\Exception $e) {
@@ -267,8 +301,6 @@ class PreSaleReportController extends Controller
             ], 500);
         }
     }
-
-
 
 
     /**
