@@ -95,7 +95,6 @@ class OrderController extends Controller
                 'msg' => 'Orden creada correctamente.',
                 'data' => $order->load(['client', 'user', 'details'])
             ], 201);
-
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
