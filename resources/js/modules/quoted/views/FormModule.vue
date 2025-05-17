@@ -80,16 +80,17 @@
                       <th>Recurso</th>
                       <th>Distribuidor</th>
                       <th>Costo</th>
+                      <th>Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(itemRecurso, index2) in items[index]" :key="index2">
                       <td>
-                        <input type="text" class="form-control" placeholder="Recurso" v-model="itemRecurso.recurso">
+                        <input type="text" class="form-control" placeholder="Recurso" v-model="itemRecurso.resource">
                       </td>
                       <td>
                         <multiselect :options="suppliers" placeholder="Seleccione un distribuidor" :show-labels="false"
-                          track-by="name" label="name" style="font-size: 13px" :value="itemRecurso.distribuidor"
+                          track-by="name" label="name" style="font-size: 13px" :value="itemRecurso.supplier"
                           @select="(option) => selectedSupplier(option, index, index2)" append-to-body>
                           <template slot="singleLabel" slot-scope="{ option }">
                             <span class="badge badge-pill badge-success">{{ option.name }}</span>
@@ -97,7 +98,13 @@
                         </multiselect>
                       </td>
                       <td>
-                        <input type="number" class="form-control" placeholder="Costo" v-model="itemRecurso.costo">
+                        <input type="number" class="form-control" placeholder="Costo" v-model="itemRecurso.cost">
+                      </td>
+                      <td>
+                        <!-- Botón para eliminar la fila -->
+                        <button class="btn btn-danger" @click="removeItem(index, index2)">
+                          <i class="fas fa-trash"></i>
+                        </button>
                       </td>
                     </tr>
                   </tbody>
@@ -149,14 +156,7 @@ export default {
   },
   data() {
     return {
-      form: {
-        delivery_date: '',
-        delivery_location: '',
-        client_id: '',
-        issue_date: '',
-        user_id: 1,
-        order_details: []
-      },
+      form: {},
       products: [],
       suppliers: [],
       productsGroup: [],
@@ -182,7 +182,8 @@ export default {
   methods: {
     selectedSupplier(option, index, index2) {
       console.log(option, index, index2);
-      this.$set(this.items[index][index2], 'distribuidor', option);
+      this.$set(this.items[index][index2], 'supplier', option);
+      this.$set(this.items[index][index2], 'supplier_id', option.id);
     },
     addItem(index) {
       // Verifica si el índice correspondiente existe en `items`
@@ -191,13 +192,18 @@ export default {
       }
       // Agrega un nuevo recurso al array
       this.items[index].push({
-        recurso: '',
-        distribuidor: null,
-        costo: 0
+        resource: '',
+        supplier: null,
+        supplier_id: null,
+        cost: 0
       });
     },
-    removeItem(index) {
-      this.items.splice(index, 1);
+    removeItem(index, resourceIndex) {
+      // Verifica si el índice correspondiente existe en `items`
+      if (this.items[index]) {
+        // Elimina el recurso en el índice especificado
+        this.items[index].splice(resourceIndex, 1);
+      }
     },
     deleteEntity(entity) {
       this.form.client_id = null;
@@ -228,27 +234,23 @@ export default {
       this.$refs['validation-observer'].reset();
     },
     async sendEditData() {
-      var newItems = [];
-      for (var item of this.items) {
-        if (item.product_id) {
-          newItems.push(item);
-          continue;
-        }
-        item.product_id = item.product.id;
-        newItems.push(item);
-      }
-      this.form.order_details = newItems;
-      this.form.issue_date = this.form.delivery_date
 
-      if (this.form.order_details.length == 0) {
-        Alerts.showErrorMessageWithMessage("No existe ningun producto pedido");
-        return false;
+      var body = {
+        "order_id": this.form.id,
+        "details": []
+      };
+
+      for (const [indexForm, itemForm] of this.form.details.entries()) {
+        body.details.push({
+          "orders_detail_id": itemForm.id,
+          "details": this.items[indexForm]
+        });
       }
       this.is_send_data = true
       try {
         const body = { ...this.form }
 
-        const result = await axios.put(`/api/order/${body.id}`, { ...body }).then(async (result) => {
+        const result = await axios.put(`/api/pre-sale-report`, body).then(async (result) => {
           if (result.status === 200) {
             Alerts.showUpdatedMessage()
             this.resetForm()
@@ -302,7 +304,7 @@ export default {
 
 
         for (const [indexDetail, itemDetail] of this.item.details.entries()) {
-          this.items[indexDetail] = []; // Inicializa un array vacío por cada detalle
+          this.items[indexDetail] = itemDetail.detail ? itemDetail.detail: []; // Inicializa un array vacío por cada detalle
         }
         // console.log(this.item, "ITEM-PRE-VENTA");
         // const newDetails = [];
@@ -369,7 +371,7 @@ export default {
 
         // Suma los costos de todos los recursos
         const totalCost = this.items[index].reduce((sum, recurso) => {
-          return sum + (parseFloat(recurso.costo) || 0); // Suma cada costo
+          return sum + (parseFloat(recurso.cost) || 0); // Suma cada costo
         }, 0);
 
         // Calcula el precio con el 30% adicional

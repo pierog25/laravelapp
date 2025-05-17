@@ -38,7 +38,7 @@ export default {
       /** USAR EN CASO SE HAGA LA PAGINACION EN BACKEND*/
       //body.start = this.paginate
 
-      let url = '/api/order'
+      let url = '/api/pre-sale-report'
 
       try {
         const result = await axios.get(url,{

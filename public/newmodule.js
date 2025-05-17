@@ -1495,14 +1495,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      form: {
-        delivery_date: '',
-        delivery_location: '',
-        client_id: '',
-        issue_date: '',
-        user_id: 1,
-        order_details: []
-      },
+      form: {},
       products: [],
       suppliers: [],
       productsGroup: [],
@@ -1528,7 +1521,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   methods: {
     selectedSupplier: function selectedSupplier(option, index, index2) {
       console.log(option, index, index2);
-      this.$set(this.items[index][index2], 'distribuidor', option);
+      this.$set(this.items[index][index2], 'supplier', option);
+      this.$set(this.items[index][index2], 'supplier_id', option.id);
     },
     addItem: function addItem(index) {
       // Verifica si el índice correspondiente existe en `items`
@@ -1538,13 +1532,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
       this.items[index].push({
-        recurso: '',
-        distribuidor: null,
-        costo: 0
+        resource: '',
+        supplier: null,
+        supplier_id: null,
+        cost: 0
       });
     },
-    removeItem: function removeItem(index) {
-      this.items.splice(index, 1);
+    removeItem: function removeItem(index, resourceIndex) {
+      // Verifica si el índice correspondiente existe en `items`
+      if (this.items[index]) {
+        // Elimina el recurso en el índice especificado
+        this.items[index].splice(resourceIndex, 1);
+      }
     },
     deleteEntity: function deleteEntity(entity) {
       this.form.client_id = null;
@@ -1578,77 +1577,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var newItems, _iterator, _step, item, body, result;
+        var body, _iterator, _step, _step$value, indexForm, itemForm, _body, result;
 
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                newItems = [];
-                _iterator = _createForOfIteratorHelper(_this.items);
-                _context2.prev = 2;
+                body = {
+                  "order_id": _this.form.id,
+                  "details": []
+                };
+                _iterator = _createForOfIteratorHelper(_this.form.details.entries());
 
-                _iterator.s();
-
-              case 4:
-                if ((_step = _iterator.n()).done) {
-                  _context2.next = 13;
-                  break;
+                try {
+                  for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                    _step$value = _slicedToArray(_step.value, 2), indexForm = _step$value[0], itemForm = _step$value[1];
+                    body.details.push({
+                      "orders_detail_id": itemForm.id,
+                      "details": _this.items[indexForm]
+                    });
+                  }
+                } catch (err) {
+                  _iterator.e(err);
+                } finally {
+                  _iterator.f();
                 }
 
-                item = _step.value;
-
-                if (!item.product_id) {
-                  _context2.next = 9;
-                  break;
-                }
-
-                newItems.push(item);
-                return _context2.abrupt("continue", 11);
-
-              case 9:
-                item.product_id = item.product.id;
-                newItems.push(item);
-
-              case 11:
-                _context2.next = 4;
-                break;
-
-              case 13:
-                _context2.next = 18;
-                break;
-
-              case 15:
-                _context2.prev = 15;
-                _context2.t0 = _context2["catch"](2);
-
-                _iterator.e(_context2.t0);
-
-              case 18:
-                _context2.prev = 18;
-
-                _iterator.f();
-
-                return _context2.finish(18);
-
-              case 21:
-                _this.form.order_details = newItems;
-                _this.form.issue_date = _this.form.delivery_date;
-
-                if (!(_this.form.order_details.length == 0)) {
-                  _context2.next = 26;
-                  break;
-                }
-
-                Alerts.showErrorMessageWithMessage("No existe ningun producto pedido");
-                return _context2.abrupt("return", false);
-
-              case 26:
                 _this.is_send_data = true;
-                _context2.prev = 27;
-                body = _objectSpread({}, _this.form);
-                _context2.next = 31;
-                return axios.put("/api/order/".concat(body.id), _objectSpread({}, body)).then( /*#__PURE__*/function () {
+                _context2.prev = 4;
+                _body = _objectSpread({}, _this.form);
+                _context2.next = 8;
+                return axios.put("/api/pre-sale-report", _body).then( /*#__PURE__*/function () {
                   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(result) {
                     return _regeneratorRuntime().wrap(function _callee$(_context) {
                       while (1) {
@@ -1683,25 +1642,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.is_search = false;
                 });
 
-              case 31:
+              case 8:
                 result = _context2.sent;
-                _context2.next = 37;
+                _context2.next = 14;
                 break;
 
-              case 34:
-                _context2.prev = 34;
-                _context2.t1 = _context2["catch"](27);
+              case 11:
+                _context2.prev = 11;
+                _context2.t0 = _context2["catch"](4);
                 Alerts.showErrorMessage();
 
-              case 37:
+              case 14:
                 _this.is_send_data = false;
 
-              case 38:
+              case 15:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[2, 15, 18, 21], [27, 34]]);
+        }, _callee2, null, [[4, 11]]);
       }))();
     },
     sendCreateData: function sendCreateData() {
@@ -1819,7 +1778,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 indexDetail = _step3$value[0],
                 itemDetail = _step3$value[1];
 
-            this.items[indexDetail] = []; // Inicializa un array vacío por cada detalle
+            this.items[indexDetail] = itemDetail.detail ? itemDetail.detail : []; // Inicializa un array vacío por cada detalle
           } // console.log(this.item, "ITEM-PRE-VENTA");
           // const newDetails = [];
           // for (var detail of this.item.details) {
@@ -1973,7 +1932,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         if (!_this6.items[index]) return 0; // Suma los costos de todos los recursos
 
         var totalCost = _this6.items[index].reduce(function (sum, recurso) {
-          return sum + (parseFloat(recurso.costo) || 0); // Suma cada costo
+          return sum + (parseFloat(recurso.cost) || 0); // Suma cada costo
         }, 0); // Calcula el precio con el 30% adicional
 
 
@@ -3391,15 +3350,15 @@ var render = function render() {
             staticClass: "col-md-8 table-responsive mt-3"
           }, [_c("table", {
             staticClass: "table table-bordered"
-          }, [_c("thead", [_c("tr", [_c("th", [_vm._v("Recurso")]), _vm._v(" "), _c("th", [_vm._v("Distribuidor")]), _vm._v(" "), _c("th", [_vm._v("Costo")])])]), _vm._v(" "), _c("tbody", _vm._l(_vm.items[index], function (itemRecurso, index2) {
+          }, [_c("thead", [_c("tr", [_c("th", [_vm._v("Recurso")]), _vm._v(" "), _c("th", [_vm._v("Distribuidor")]), _vm._v(" "), _c("th", [_vm._v("Costo")]), _vm._v(" "), _c("th", [_vm._v("Acciones")])])]), _vm._v(" "), _c("tbody", _vm._l(_vm.items[index], function (itemRecurso, index2) {
             return _c("tr", {
               key: index2
             }, [_c("td", [_c("input", {
               directives: [{
                 name: "model",
                 rawName: "v-model",
-                value: itemRecurso.recurso,
-                expression: "itemRecurso.recurso"
+                value: itemRecurso.resource,
+                expression: "itemRecurso.resource"
               }],
               staticClass: "form-control",
               attrs: {
@@ -3407,13 +3366,13 @@ var render = function render() {
                 placeholder: "Recurso"
               },
               domProps: {
-                value: itemRecurso.recurso
+                value: itemRecurso.resource
               },
               on: {
                 input: function input($event) {
                   if ($event.target.composing) return;
 
-                  _vm.$set(itemRecurso, "recurso", $event.target.value);
+                  _vm.$set(itemRecurso, "resource", $event.target.value);
                 }
               }
             })]), _vm._v(" "), _c("td", [_c("multiselect", {
@@ -3426,7 +3385,7 @@ var render = function render() {
                 "show-labels": false,
                 "track-by": "name",
                 label: "name",
-                value: itemRecurso.distribuidor,
+                value: itemRecurso.supplier,
                 "append-to-body": ""
               },
               on: {
@@ -3447,8 +3406,8 @@ var render = function render() {
               directives: [{
                 name: "model",
                 rawName: "v-model",
-                value: itemRecurso.costo,
-                expression: "itemRecurso.costo"
+                value: itemRecurso.cost,
+                expression: "itemRecurso.cost"
               }],
               staticClass: "form-control",
               attrs: {
@@ -3456,16 +3415,25 @@ var render = function render() {
                 placeholder: "Costo"
               },
               domProps: {
-                value: itemRecurso.costo
+                value: itemRecurso.cost
               },
               on: {
                 input: function input($event) {
                   if ($event.target.composing) return;
 
-                  _vm.$set(itemRecurso, "costo", $event.target.value);
+                  _vm.$set(itemRecurso, "cost", $event.target.value);
                 }
               }
-            })])]);
+            })]), _vm._v(" "), _c("td", [_c("button", {
+              staticClass: "btn btn-danger",
+              on: {
+                click: function click($event) {
+                  return _vm.removeItem(index, index2);
+                }
+              }
+            }, [_c("i", {
+              staticClass: "fas fa-trash"
+            })])])]);
           }), 0)]), _vm._v(" "), _c("button", {
             staticClass: "btn btn-primary d-flex align-items-center",
             on: {

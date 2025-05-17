@@ -1358,7 +1358,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 /** USAR EN CASO SE HAGA LA PAGINACION EN BACKEND*/
                 //body.start = this.paginate
 
-                url = '/api/order';
+                url = '/api/pre-sale-report';
                 _context.prev = 4;
                 _context.next = 7;
                 return axios.get(url, {
