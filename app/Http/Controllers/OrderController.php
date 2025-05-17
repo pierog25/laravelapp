@@ -25,7 +25,7 @@ class OrderController extends Controller
             ->with([
                 'client',
                 'user',
-                'order_details' => function ($query) {
+                'details' => function ($query) {
                     $query->where('status', true);
                 }
             ]);
@@ -95,7 +95,6 @@ class OrderController extends Controller
                 'msg' => 'Orden creada correctamente.',
                 'data' => $order->load(['client', 'user', 'details'])
             ], 201);
-
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
