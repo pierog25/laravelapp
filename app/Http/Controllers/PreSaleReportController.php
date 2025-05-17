@@ -246,7 +246,11 @@ class PreSaleReportController extends Controller
 
                 $preSale->update(['unit_price' => $unitPrice]);
 
-                $results[] = $preSale->fresh('details');
+                $results[] = $preSale->fresh([
+                    'details' => function ($query) {
+                        $query->where('status', true);
+                    }
+                ]);
             }
 
             DB::commit();
@@ -282,10 +286,8 @@ class PreSaleReportController extends Controller
             $preSale->status = false;
             $preSale->save();
 
-            foreach ($preSale->details as $detail) {
-                $detail->status = false;
-                $detail->save();
-            }
+            // Actualización masiva de detalles
+            PreSaleReportDetail::where('pre_sale_report_id', $preSale->id)->update(['status' => false]);
 
             DB::commit();
 
@@ -296,6 +298,7 @@ class PreSaleReportController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json([
                 'success' => false,
                 'msg' => 'Ocurrió un error al eliminar la preventa.',
