@@ -200,6 +200,10 @@ export default {
     async sendCreateData() {
       var newItems = [];
       for (var item of this.items) {
+        if (item.product_id) {
+          newItems.push(item);
+          continue;
+        }
         item.product_id = item.product.id;
         newItems.push(item);
       }
@@ -227,7 +231,7 @@ export default {
     validateStatus() {
       if (this.status === 'EDIT') {
         const newDetails = [];
-        for (var detail of this.item.order_details) {
+        for (var detail of this.item.details) {
           detail.product = this.productsGroup[detail.product_id]
           newDetails.push(detail);
         }
@@ -237,7 +241,7 @@ export default {
         this.form = { ...this.item }
         this.text_button = 'Actualizar'
       } else {
-        if (this.$route.name === 'updatemodule' && this.item === undefined) {
+        if (this.$route.name === 'updateorders' && this.item === undefined) {
           this.$router.push({ name: 'neworders' })
         }
       }

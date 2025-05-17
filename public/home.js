@@ -1072,6 +1072,11 @@ __webpack_require__.r(__webpack_exports__);
     icon: 'fas fa-sitemap',
     gate: 'orders_access',
     nameroute: 'listorders'
+  }, {
+    name: 'Cotización',
+    icon: 'fas fa-sitemap',
+    gate: 'quoted_access',
+    nameroute: 'listquoted'
   }]
 }, {
   titulo: 'Configuración',

@@ -18,7 +18,15 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('client_id');
             $table->date('delivery_date');
             $table->string('delivery_location');
-            $table->enum('order_status', ['En Proceso', 'Pedido', 'Cotizado', 'Preventa', 'Pagado']);
+            $table->enum('order_status', [
+                'Por Cotizar',
+                'Cotizado',
+                'Aceptado',
+                'En Producción',
+                'Producido',
+                'Enviado',
+                'Cancelado'
+            ]);
             $table->date('issue_date');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();

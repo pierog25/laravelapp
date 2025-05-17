@@ -75414,6 +75414,47 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/modules/quoted/routes/index.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/modules/quoted/routes/index.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/** MODULO BASE PARA COPIAR Y PEGAR
+ * SI NO PUEDES NI ESO YA VENDE CARAMELOS NO MAS
+ * BY JORDAN 11-02-2022*/
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'quoted',
+  component: function component() {
+    return __webpack_require__.e(/*! import() | module */ "module").then(__webpack_require__.bind(null, /*! ../layouts/ModuleLayout.vue */ "./resources/js/modules/quoted/layouts/ModuleLayout.vue"));
+  },
+  children: [{
+    path: '/quoted/new',
+    name: 'newquoted',
+    component: function component() {
+      return Promise.all(/*! import() | newmodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("vendors~listmodule~newmodule"), __webpack_require__.e("newmodule")]).then(__webpack_require__.bind(null, /*! ../views/FormModule.vue */ "./resources/js/modules/quoted/views/FormModule.vue"));
+    }
+  }, {
+    path: '/quoted/update',
+    name: 'updatequoted',
+    component: function component() {
+      return Promise.all(/*! import() | updatemodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("vendors~listmodule~newmodule"), __webpack_require__.e("newmodule")]).then(__webpack_require__.bind(null, /*! ../views/FormModule.vue */ "./resources/js/modules/quoted/views/FormModule.vue"));
+    },
+    props: true
+  }, {
+    path: '/quoted/listar',
+    name: 'listquoted',
+    component: function component() {
+      return Promise.all(/*! import() | listmodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("vendors~listmodule~newmodule"), __webpack_require__.e("listmodule")]).then(__webpack_require__.bind(null, /*! ../views/ListModule.vue */ "./resources/js/modules/quoted/views/ListModule.vue"));
+    }
+  }]
+});
+
+/***/ }),
+
 /***/ "./resources/js/plugins/aragon.js":
 /*!****************************************!*\
   !*** ./resources/js/plugins/aragon.js ***!
@@ -78683,11 +78724,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_module_base_routes_index_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../modules/module_base/routes/index.js */ "./resources/js/modules/module_base/routes/index.js");
 /* harmony import */ var _modules_customers_routes_index_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../modules/customers/routes/index.js */ "./resources/js/modules/customers/routes/index.js");
 /* harmony import */ var _modules_orders_routes_index_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../modules/orders/routes/index.js */ "./resources/js/modules/orders/routes/index.js");
+/* harmony import */ var _modules_quoted_routes_index_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../modules/quoted/routes/index.js */ "./resources/js/modules/quoted/routes/index.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -78713,7 +78756,9 @@ var routes = [{
     path: '/customers'
   }, _modules_customers_routes_index_js__WEBPACK_IMPORTED_MODULE_6__["default"]), _objectSpread({
     path: '/orders'
-  }, _modules_orders_routes_index_js__WEBPACK_IMPORTED_MODULE_7__["default"])],
+  }, _modules_orders_routes_index_js__WEBPACK_IMPORTED_MODULE_7__["default"]), _objectSpread({
+    path: '/quoted'
+  }, _modules_quoted_routes_index_js__WEBPACK_IMPORTED_MODULE_8__["default"])],
   props: true
 }, {
   path: '*',

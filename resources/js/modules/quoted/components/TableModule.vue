@@ -39,7 +39,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" style="">
                       <a class="dropdown-item" href="#" @click.prevent="editItem(item)">
-                        <i class="fas fa-edit"></i> Editar
+                        <i class="fas fa-edit"></i> Pre - Venta
                       </a>
                       <a class="dropdown-item" href="#" @click.prevent="deleteItem(item)">
                         <i class="fas fa-trash-alt"></i> Eliminar
@@ -82,7 +82,7 @@ export default {
       this.listFiltered = data.listFiltered
     },
     editItem(item) {
-      this.$router.push({ name: 'updateorders', params: { status: 'EDIT', item: item } })
+      this.$router.push({ name: 'updatequoted', params: { status: 'EDIT', item: item } })
     },
     async deleteItem(item) {
       const result = await Alerts.showConfirmDeleteMessage();

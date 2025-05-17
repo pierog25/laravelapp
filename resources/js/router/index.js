@@ -7,6 +7,7 @@ import homeRouter from '../modules/home/routes/index.js'
 import moduleRouter from '../modules/module_base/routes/index.js'
 import customersRouter from '../modules/customers/routes/index.js'
 import ordersRouter from '../modules/orders/routes/index.js'
+import quotedRouter from '../modules/quoted/routes/index.js'
 
 Vue.use(Meta)
 Vue.use(Router)
@@ -32,6 +33,10 @@ const routes = [
             {
                 path: '/orders',
                 ...ordersRouter
+            },
+            {
+                path: '/quoted',
+                ...quotedRouter
             },
         ],
         props: true

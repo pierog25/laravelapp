@@ -22,6 +22,12 @@ export default [
                 gate: 'orders_access',
                 nameroute:'listorders'
             },
+            {
+                name:'Cotización',
+                icon:'fas fa-sitemap',
+                gate: 'quoted_access',
+                nameroute:'listquoted'
+            },
         ]
     },
     {
