@@ -32,7 +32,8 @@ class PreSaleReportController extends Controller
                         ->with(['preSaleReport' => function ($q) {
                             $q->where('status', true)
                                 ->with(['details' => function ($d) {
-                                    $d->where('status', true);
+                                    $d->where('status', true)
+                                    ->with(['supplier']);
                                 }]);
                         }]);
                 }
@@ -44,7 +45,7 @@ class PreSaleReportController extends Controller
             });
         }
 
-        $ordersQuery->where('order_status', 'Por Cotizar');
+        $ordersQuery->whereIn('order_status', ['Por Cotizar', 'Cotizado']);
         $ordersQuery->whereBetween('issue_date', [$fromDate, $toDate]);
         $orders = $ordersQuery->get();
 

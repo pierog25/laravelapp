@@ -98,11 +98,11 @@
                         </multiselect>
                       </td>
                       <td>
-                        <input type="number" class="form-control" placeholder="Costo" v-model="itemRecurso.cost">
+                        <input type="number" class="form-control" placeholder="Costo" v-model="itemRecurso.cost" step="0.01">
                       </td>
                       <td>
                         <!-- Botón para eliminar la fila -->
-                        <button class="btn btn-danger" @click="removeItem(index, index2)">
+                        <button class="btn btn-danger" @click.prevent="removeItem(index, index2)">
                           <i class="fas fa-trash"></i>
                         </button>
                       </td>
@@ -160,6 +160,7 @@ export default {
       products: [],
       suppliers: [],
       productsGroup: [],
+      suppliersGroup: [],
       items: [],
       text_button: 'Crear',
       is_send_data: false,
@@ -195,7 +196,9 @@ export default {
         resource: '',
         supplier: null,
         supplier_id: null,
-        cost: 0
+        cost: 0,
+        pre_sale_report_id: null,
+        id: null
       });
     },
     removeItem(index, resourceIndex) {
@@ -242,16 +245,16 @@ export default {
 
       for (const [indexForm, itemForm] of this.form.details.entries()) {
         body.details.push({
-          "orders_detail_id": itemForm.id,
+          "order_detail_id": itemForm.id,
           "details": this.items[indexForm]
         });
       }
       this.is_send_data = true
       try {
-        const body = { ...this.form }
+        // const body = { ...this.form }
 
-        const result = await axios.put(`/api/pre-sale-report`, body).then(async (result) => {
-          if (result.status === 200) {
+        const result = await axios.post(`/api/pre-sale-report`, body).then(async (result) => {
+          if (result.status === 201) {
             Alerts.showUpdatedMessage()
             this.resetForm()
 
@@ -301,20 +304,7 @@ export default {
     },
     validateStatus() {
       if (this.status === 'EDIT') {
-
-
-        for (const [indexDetail, itemDetail] of this.item.details.entries()) {
-          this.items[indexDetail] = itemDetail.detail ? itemDetail.detail: []; // Inicializa un array vacío por cada detalle
-        }
-        // console.log(this.item, "ITEM-PRE-VENTA");
-        // const newDetails = [];
-        // for (var detail of this.item.details) {
-        //   detail.product = this.productsGroup[detail.product_id]
-        //   newDetails.push(detail);
-        // }
-        // this.items = newDetails;
-        // this.getEntity(this.item.client)
-        // this.$refs["search-entity"].setEntity(this.item.client.document_number)
+        console.log(this.item.details,"DETAILS")
         this.form = { ...this.item }
         this.text_button = 'Actualizar'
       } else {
@@ -345,6 +335,14 @@ export default {
         const result = await axios.get(`/api/supplier`);
         if (result.status == 200) {
           this.suppliers = result.data;
+          this.suppliersGroup = this.suppliers.reduce((acc, product) => {
+            if (!acc[product.id]) {
+              acc[product.id] = []; // Crea un array vacío si aún no hay entradas para este ID
+            }
+            acc[product.id].push(product); // Agrega el producto al grupo correspondiente
+            return acc;
+          }, {});
+          console.log(this.suppliersGroup)
         }
       } catch (e) {
         this.suppliers = [];
@@ -355,7 +353,11 @@ export default {
     await this.getProducts();
     await this.getSuppliers();
     this.validateStatus();
-    this.items = this.item.details.map(() => []);
+    this.items = this.item.details.map((itemDetail) => {
+      return itemDetail.pre_sale_report && itemDetail.pre_sale_report.details
+        ? [...itemDetail.pre_sale_report.details] // Clona los detalles existentes
+        : []; // O inicializa como un array vacío
+    });
   },
   watch: {
     status: function (status) {
