@@ -23,4 +23,7 @@ Route::group(['middleware' => []], function () {
     Route::apiResource('order', 'OrderController');
     Route::apiResource('order-details', 'OrderDetailController');
     Route::apiResource('product', 'ProductController');
+    Route::apiResource('supplier', 'SupplierController');
+    Route::apiResource('pre-sale-report', 'PreSaleReportController');
+    Route::apiResource('pre-sale-report-detail', 'PreSaleReportDetailController');
 });
