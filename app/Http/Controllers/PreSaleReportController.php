@@ -76,7 +76,14 @@ class PreSaleReportController extends Controller
 
         DB::beginTransaction();
         try {
-            $order = Order::with('details.preSaleReport.details')->findOrFail($validated["order_id"]);
+            $order = Order::with([
+                'details.preSaleReport' => function ($query) {
+                    $query->where('status', true);
+                },
+                'details.preSaleReport.details' => function ($query) {
+                    $query->where('status', true);
+                }
+            ])->findOrFail($validated["order_id"]);
             $results = [];
 
             // Indexar los OrderDetails por ID para acceso rápido
