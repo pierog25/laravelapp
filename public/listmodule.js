@@ -75,71 +75,107 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      page: this.value,
-      pages_per_records: 0,
-      last_page: 0,
-      max_pages: 3,
-      pages: []
+      list: [],
+      listFiltered: [],
+      cantPages: [],
+      count: 0,
+      actualPage: {
+        index: 0,
+        pagination: 1,
+        "class": 'active',
+        count_pagination: 1
+      }
     };
   },
   props: {
-    value: {
-      type: Number,
-      "default": 1
-    },
-    records: {
-      type: Number,
-      "default": 0
-    },
-    per_page: {
-      type: Number,
-      "default": 25
-    },
-    disabled: {
-      type: Boolean,
-      "default": false
+    listAll: {
+      type: Array
     }
   },
   methods: {
-    sendPage: function sendPage(value) {
-      this.$emit('input', this.page);
-      this.$emit('paginate', this.page);
-    },
-    setPages: function setPages() {
-      this.pages = [];
-      this.pages_per_records = Math.ceil(this.records / this.per_page);
+    filterList: function filterList(list) {
+      this.cantPages = [];
+      this.listFiltered = [];
+      this.count = list.length;
 
-      for (var i = 1; i <= this.pages_per_records; i++) {
-        this.pages.push(i);
+      if (list.length >= 10) {
+        var cantPages = Math.ceil(list.length / 10);
+        console.log(cantPages);
+        var cant_in_page = 1;
+
+        for (var i = 0; i < cantPages; i++) {
+          cant_in_page += 10 * i;
+          this.cantPages.push({
+            index: i,
+            pagination: i + 1,
+            "class": '',
+            count_pagination: cant_in_page
+          });
+          this.listFiltered.push(list.slice(i * 10, 10 * (i + 1)));
+        }
+
+        this.list = this.listFiltered[0];
+      } else {
+        this.list = list;
+        this.listFiltered[0] = list;
       }
 
-      this.last_page = this.pages.length;
-    }
-  },
-  computed: {
-    records_init_page: function records_init_page() {
-      return (this.page - 1) * this.per_page + 1;
+      this.cantPages[0] = {
+        index: 0,
+        pagination: 1,
+        "class": 'active',
+        count_pagination: 1
+      };
+      this.actualPage = this.cantPages[0];
+      this.$emit('paginate', {
+        "cantPages": this.cantPages,
+        "list": this.list,
+        "listFiltered": this.listFiltered
+      });
     },
-    records_end_page: function records_end_page() {
-      return this.page * this.per_page > this.records ? this.records : this.page * this.per_page;
+    sendPaginate: function sendPaginate(item) {
+      var _iterator = _createForOfIteratorHelper(this.cantPages),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var itemCant = _step.value;
+          itemCant["class"] = "";
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
+      item["class"] = 'active';
+      this.list = this.listFiltered[item.index];
+      this.count = this.list.length;
+      this.$emit('paginate', {
+        "cantPages": this.cantPages,
+        "list": this.list,
+        "listFiltered": this.listFiltered
+      });
+      this.actualPage = item;
     },
-    pages_show: function pages_show() {
-      var first_index = Math.max(this.page - 3, 0);
-      var last_index = Math.min(this.page + 2, this.last_page);
-      return this.pages.slice(first_index, last_index);
+    changePaginate: function changePaginate(value) {
+      var index = this.actualPage.index + value;
+
+      if (this.cantPages[index]) {
+        this.sendPaginate(this.cantPages[index]);
+      }
     }
   },
-  mount: function mount() {
-    this.setPages();
-  },
-  watch: {
-    records: function records(value) {
-      this.setPages();
-    }
-  }
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -165,12 +201,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      search: {
-        select_option: 'TODOS',
-        date_start: Vue.moment().format('YYYY-MM-DD'),
-        date_end: Vue.moment().format('YYYY-MM-DD')
-      },
-      options_select: ['TODOS']
+      search: {},
+      names: "",
+      document: ""
     };
   },
   props: {
@@ -181,13 +214,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     checkForm: function checkForm() {
+      this.search = {};
+
+      if (this.names) {
+        this.search.name = this.names;
+      }
+
+      if (this.document) {
+        this.search.document = this.document;
+      }
+
       this.$emit('search', this.search);
-    },
-    getDateStart: function getDateStart(date) {
-      this.search.date_start = date;
-    },
-    getDateEnd: function getDateEnd(date) {
-      this.search.date_end = date;
     }
   }
 });
@@ -244,13 +281,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     setPagination: function setPagination(data) {
+      console.log(data, "data");
       this.list = data.list;
       this.cantPages = data.cantPages;
       this.listFiltered = data.listFiltered;
     },
     editItem: function editItem(item) {
       this.$router.push({
-        name: 'updatemodule',
+        name: 'updatecustomers',
         params: {
           status: 'EDIT',
           item: item
@@ -279,7 +317,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _context.prev = 4;
                 _context.next = 7;
-                return axios["delete"]("/ruta-module/".concat(item.id), _objectSpread({}, item));
+                return axios["delete"]("/api/client/".concat(item.id), _objectSpread({}, item));
 
               case 7:
                 response = _context.sent;
@@ -386,7 +424,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var list, body, url, result, resultData;
+        var list, body, url, result;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -397,25 +435,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 /** USAR EN CASO SE HAGA LA PAGINACION EN BACKEND*/
                 //body.start = this.paginate
 
-                url = 'ruta-module';
+                url = '/api/client';
                 _context.prev = 4;
                 _context.next = 7;
-                return axios.get(url);
+                return axios.get(url, {
+                  params: body
+                });
 
               case 7:
                 result = _context.sent;
 
                 if (result.status === 200) {
-                  resultData = result.data;
-
-                  if (resultData.code) {
-                    Alerts.showToastMessage(resultData.Message, 'center');
-                    list = resultData.data;
-                    /** USAR EN CASO SE HAGA LA PAGINACION EN BACKEND*/
-                    //this.count = resultData.count
-                  } else {
-                    Alerts.showToastErrorMessage(resultData.Message, 'center');
-                  }
+                  console.log(result.data, "result");
+                  list = result.data; // if (resultData.code) {
+                  //   Alerts.showToastMessage(resultData.Message, 'center');
+                  //   list = resultData.data;
+                  //   /** USAR EN CASO SE HAGA LA PAGINACION EN BACKEND*/
+                  //   //this.count = resultData.count
+                  // }else{
+                  //   Alerts.showToastErrorMessage(resultData.Message,'center')
+                  // }
 
                   _this.is_search = false;
                 }
@@ -778,11 +817,11 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       search: {
-        select_option: 'TODOS',
-        date_start: Vue.moment().format('YYYY-MM-DD'),
-        date_end: Vue.moment().format('YYYY-MM-DD')
+        desde: Vue.moment().format('YYYY-MM-DD'),
+        hasta: Vue.moment().format('YYYY-MM-DD'),
+        document_number: ""
       },
-      options_select: ['TODOS']
+      document: ""
     };
   },
   props: {
@@ -796,10 +835,10 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('search', this.search);
     },
     getDateStart: function getDateStart(date) {
-      this.search.date_start = date;
+      this.search.desde = date;
     },
     getDateEnd: function getDateEnd(date) {
-      this.search.date_end = date;
+      this.search.hasta = date;
     }
   }
 });
@@ -862,7 +901,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     editItem: function editItem(item) {
       this.$router.push({
-        name: 'updatemodule',
+        name: 'updateorders',
         params: {
           status: 'EDIT',
           item: item
@@ -1009,10 +1048,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 /** USAR EN CASO SE HAGA LA PAGINACION EN BACKEND*/
                 //body.start = this.paginate
 
-                url = 'ruta-module';
+                url = '/api/order/';
                 _context.prev = 4;
                 _context.next = 7;
-                return axios.get(url);
+                return axios.get(url, {
+                  params: body
+                });
 
               case 7:
                 result = _context.sent;
@@ -1020,13 +1061,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 if (result.status === 200) {
                   resultData = result.data;
 
-                  if (resultData.code) {
-                    Alerts.showToastMessage(resultData.Message, 'center');
+                  if (resultData.success) {
+                    Alerts.showToastMessage(resultData.msg, 'center');
+                    console.log(resultData, "RESULT-DATA");
                     list = resultData.data;
                     /** USAR EN CASO SE HAGA LA PAGINACION EN BACKEND*/
                     //this.count = resultData.count
                   } else {
-                    Alerts.showToastErrorMessage(resultData.Message, 'center');
+                    Alerts.showToastErrorMessage(resultData.msg, 'center');
                   }
 
                   _this.is_search = false;
@@ -1145,99 +1187,117 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _vm.records > _vm.per_page ? _c("div", {
+  return _vm.listAll.length >= 10 ? _c("div", {
     staticClass: "row"
   }, [_c("div", {
-    staticClass: "col-12 col-md-5"
+    staticClass: "col-sm-12 col-md-5"
   }, [_c("div", {
-    staticClass: "dataTables_info d-flex justify-content-md-start justify-content-center",
+    staticClass: "dataTables_info",
     attrs: {
       id: "datatable-basic_info",
       role: "status",
       "aria-live": "polite"
     }
-  }, [_vm._v("\r\n        Mostrando " + _vm._s(_vm.records_init_page) + " a " + _vm._s(_vm.records_end_page) + " de " + _vm._s(_vm.records) + " resultados\r\n      ")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-12 col-md-7"
-  }, [_c("nav", {
+  }, [_vm._v("\r\n            Mostrando " + _vm._s(_vm.actualPage.count_pagination) + " a " + _vm._s(_vm.list.length) + " de " + _vm._s(_vm.listAll.length) + " resultados\r\n          ")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-12 col-md-7"
+  }, [_c("div", {
+    staticClass: "dataTables_paginate paging_simple_numbers",
     attrs: {
-      "aria-label": "Page navigation example"
+      id: "datatable-basic_paginate"
     }
   }, [_c("ul", {
-    staticClass: "pagination justify-content-md-end justify-content-center mt-3 mt-md-0"
+    staticClass: "pagination justify-content-end"
   }, [_c("li", {
-    staticClass: "page-item"
-  }, [_c("button", {
+    staticClass: "paginate_button page-item previous",
+    attrs: {
+      id: "datatable-basic_previous"
+    }
+  }, [_c("a", {
     staticClass: "page-link",
     attrs: {
-      "aria-label": "Previous",
-      disabled: _vm.disabled
+      href: "#",
+      "aria-controls": "datatable-basic",
+      "data-dt-idx": "0",
+      tabindex: "0"
     },
     on: {
       click: function click($event) {
-        return _vm.sendPage(_vm.page--);
+        $event.preventDefault();
+        return _vm.changePaginate(-1);
       }
     }
   }, [_c("i", {
-    staticClass: "fa fa-angle-left"
-  }), _vm._v(" "), _c("span", {
-    staticClass: "sr-only"
-  }, [_vm._v("Previous")])])]), _vm._v(" "), _vm.pages_per_records > 1 && !_vm.pages_show.includes(1) ? _c("li", {
-    staticClass: "page-item"
-  }, [_c("button", {
-    staticClass: "page-link",
-    attrs: {
-      disabled: _vm.disabled
-    },
-    on: {
-      click: function click($event) {
-        return _vm.sendPage(_vm.page = 1);
-      }
-    }
-  }, [_vm._v(_vm._s(1))])]) : _vm._e(), _vm._v(" "), _vm._l(_vm.pages_show, function (pageNumber) {
+    staticClass: "fas fa-angle-left"
+  })])]), _vm._v(" "), _vm._l(_vm.cantPages, function (item, index) {
     return _c("li", {
-      staticClass: "page-item",
-      "class": [pageNumber === _vm.page ? "active" : ""]
-    }, [_c("button", {
+      "class": "paginate_button page-item " + item["class"]
+    }, [_vm.cantPages.length > 10 && (_vm.actualPage.index === index || _vm.actualPage.index === index + 1 || _vm.actualPage.index === index - 1 || index === _vm.cantPages.length - 1 || index === 0 || (_vm.actualPage.index <= 4 || _vm.actualPage.index >= _vm.cantPages.length - 4) && (index === _vm.cantPages.length - 2 || index === 1)) ? _c("a", {
       staticClass: "page-link",
       attrs: {
-        disabled: _vm.disabled
+        href: "#",
+        "aria-controls": "datatable-basic",
+        "data-dt-idx": "1",
+        tabindex: "0"
       },
       on: {
         click: function click($event) {
-          return _vm.sendPage(_vm.page = pageNumber);
+          $event.preventDefault();
+          return _vm.sendPaginate(item);
         }
       }
-    }, [_vm._v(_vm._s(pageNumber))])]);
-  }), _vm._v(" "), _vm.pages_per_records > 1 && !_vm.pages_show.includes(_vm.last_page) ? _c("li", {
-    staticClass: "page-item"
-  }, [_c("button", {
-    staticClass: "page-link",
-    attrs: {
-      disabled: _vm.disabled
-    },
-    on: {
-      click: function click($event) {
-        return _vm.sendPage(_vm.page = _vm.last_page);
+    }, [_vm._v(_vm._s(item.pagination))]) : _vm.cantPages.length > 10 && (_vm.actualPage.index + 2 === index || _vm.actualPage.index - 2 === index) ? _c("a", {
+      staticClass: "page-link",
+      attrs: {
+        href: "#",
+        "aria-controls": "datatable-basic",
+        "data-dt-idx": "1",
+        tabindex: "0"
+      },
+      on: {
+        click: function click($event) {
+          $event.preventDefault();
+          return function () {
+            return null;
+          }.apply(null, arguments);
+        }
       }
+    }, [_vm._v("...")]) : _vm.cantPages.length <= 10 ? _c("a", {
+      staticClass: "page-link",
+      attrs: {
+        href: "#",
+        "aria-controls": "datatable-basic",
+        "data-dt-idx": "1",
+        tabindex: "0"
+      },
+      on: {
+        click: function click($event) {
+          $event.preventDefault();
+          return _vm.sendPaginate(item);
+        }
+      }
+    }, [_vm._v(_vm._s(item.pagination))]) : _vm._e()]);
+  }), _vm._v(" "), _c("li", {
+    staticClass: "paginate_button page-item next",
+    attrs: {
+      id: "datatable-basic_next"
     }
-  }, [_vm._v(_vm._s(_vm.last_page))])]) : _vm._e(), _vm._v(" "), _c("li", {
-    staticClass: "page-item"
-  }, [_c("button", {
+  }, [_c("a", {
     staticClass: "page-link",
     attrs: {
-      "aria-label": "Next",
-      disabled: _vm.disabled
+      href: "#",
+      "aria-controls": "datatable-basic",
+      "data-dt-idx": "2",
+      tabindex: "0"
     },
     on: {
       click: function click($event) {
-        return _vm.sendPage(_vm.page++);
+        $event.preventDefault();
+        return _vm.changePaginate(+1);
       }
     }
   }, [_c("i", {
-    staticClass: "fa fa-angle-right"
-  }), _vm._v(" "), _c("span", {
-    staticClass: "sr-only"
-  }, [_vm._v("Next")])])])], 2)])])]) : _vm._e();
+    staticClass: "fas fa-angle-right"
+  })])])], 2)])])]) : _vm._e();
 };
 
 var staticRenderFns = [];
@@ -1281,60 +1341,64 @@ var render = function render() {
         }, [_c("div", {
           staticClass: "form-row"
         }, [_c("div", {
-          staticClass: "col-md-3 mb-2"
-        }, [_c("div", {
-          staticClass: "form-group"
+          staticClass: "col-md-4 mb-2"
         }, [_c("label", {
-          staticClass: "form-control-label"
-        }, [_vm._v("Select")]), _vm._v(" "), _c("multiselect", {
+          staticClass: "form-control-label",
           attrs: {
-            options: _vm.options_select,
-            placeholder: "TODOS",
-            "deselect-label": "Deseleccionar"
+            "for": "documento"
+          }
+        }, [_vm._v("N° Documento")]), _vm._v(" "), _c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.document,
+            expression: "document"
+          }],
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            id: "documento",
+            placeholder: "Documento"
           },
-          scopedSlots: _vm._u([{
-            key: "singleLabel",
-            fn: function fn(_ref2) {
-              var option = _ref2.option;
-              return [_c("span", {
-                staticClass: "badge badge-pill badge-success"
-              }, [_vm._v(_vm._s(option))])];
+          domProps: {
+            value: _vm.document
+          },
+          on: {
+            input: function input($event) {
+              if ($event.target.composing) return;
+              _vm.document = $event.target.value;
             }
-          }], null, true),
-          model: {
-            value: _vm.search.select_option,
-            callback: function callback($$v) {
-              _vm.$set(_vm.search, "select_option", $$v);
-            },
-            expression: "search.select_option"
           }
-        })], 1)]), _vm._v(" "), _c("div", {
-          staticClass: "col-md-3 mb-2"
-        }, [_c("div", {
-          staticClass: "form-group"
+        })]), _vm._v(" "), _c("div", {
+          staticClass: "col-md-4 mb-2"
         }, [_c("label", {
-          staticClass: "form-control-label"
-        }, [_vm._v("Fecha Inicio")]), _vm._v(" "), _c("datepicker", {
+          staticClass: "form-control-label",
           attrs: {
-            value: _vm.search.date_start
+            "for": "nombres"
+          }
+        }, [_vm._v("Nombres")]), _vm._v(" "), _c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.names,
+            expression: "names"
+          }],
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            id: "nombres",
+            placeholder: "Nombres"
+          },
+          domProps: {
+            value: _vm.names
           },
           on: {
-            input: _vm.getDateStart
+            input: function input($event) {
+              if ($event.target.composing) return;
+              _vm.names = $event.target.value;
+            }
           }
-        })], 1)]), _vm._v(" "), _c("div", {
-          staticClass: "col-md-3 mb-2"
-        }, [_c("div", {
-          staticClass: "form-group"
-        }, [_c("label", {
-          staticClass: "form-control-label"
-        }, [_vm._v("Fecha Fin")]), _vm._v(" "), _c("datepicker", {
-          attrs: {
-            value: _vm.search.date_end
-          },
-          on: {
-            input: _vm.getDateEnd
-          }
-        })], 1)]), _vm._v(" "), _c("div", {
+        })]), _vm._v(" "), _c("div", {
           staticClass: "col-md-3 mb-2"
         }, [_c("div", {
           staticClass: "form-group"
@@ -1404,7 +1468,7 @@ var render = function render() {
       attrs: {
         role: "row"
       }
-    }, [_c("td", [_vm._v(_vm._s(item.val1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.val2))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.val3))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.val4))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.val5))]), _vm._v(" "), _c("td", {
+    }, [_c("td", [_vm._v(_vm._s(item.first_name + " " + item.last_name))]), _vm._v(" "), _c("td", [_c("strong", [_vm._v("Tipo Doc: ")]), _vm._v(_vm._s(item.document_type.name)), _c("br"), _vm._v(" "), _c("strong", [_vm._v("Documento: ")]), _vm._v(_vm._s(item.document_number) + "\r\n              ")]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.email))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.address))]), _vm._v(" "), _c("td", {
       staticClass: "text-right"
     }, [_c("div", {
       staticClass: "dropdown"
@@ -1474,18 +1538,8 @@ var staticRenderFns = [function () {
       scope: "col",
       tabindex: "0",
       "aria-controls": "datatable-basic",
-      rowspan: "1",
-      colspan: "1",
-      "aria-label": "Name: activate to sort column ascending"
-    }
-  }, [_vm._v("Tipo Documento\r\n              ")]), _vm._v(" "), _c("th", {
-    staticClass: "sorting",
-    attrs: {
-      scope: "col",
-      tabindex: "0",
-      "aria-controls": "datatable-basic",
-      rowspan: "1",
-      colspan: "1",
+      rowspan: "2",
+      colspan: "2",
       "aria-label": "Email: activate to sort column ascending"
     }
   }, [_vm._v("Documento\r\n              ")]), _vm._v(" "), _c("th", {
@@ -1954,33 +2008,35 @@ var render = function render() {
           staticClass: "form-row"
         }, [_c("div", {
           staticClass: "col-md-3 mb-2"
-        }, [_c("div", {
-          staticClass: "form-group"
         }, [_c("label", {
-          staticClass: "form-control-label"
-        }, [_vm._v("Select")]), _vm._v(" "), _c("multiselect", {
+          staticClass: "form-control-label",
           attrs: {
-            options: _vm.options_select,
-            placeholder: "TODOS",
-            "deselect-label": "Deseleccionar"
-          },
-          scopedSlots: _vm._u([{
-            key: "singleLabel",
-            fn: function fn(_ref2) {
-              var option = _ref2.option;
-              return [_c("span", {
-                staticClass: "badge badge-pill badge-success"
-              }, [_vm._v(_vm._s(option))])];
-            }
-          }], null, true),
-          model: {
-            value: _vm.search.select_option,
-            callback: function callback($$v) {
-              _vm.$set(_vm.search, "select_option", $$v);
-            },
-            expression: "search.select_option"
+            "for": "documento"
           }
-        })], 1)]), _vm._v(" "), _c("div", {
+        }, [_vm._v("N° Documento")]), _vm._v(" "), _c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.search.document_number,
+            expression: "search.document_number"
+          }],
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            id: "documento",
+            placeholder: "Documento"
+          },
+          domProps: {
+            value: _vm.search.document_number
+          },
+          on: {
+            input: function input($event) {
+              if ($event.target.composing) return;
+
+              _vm.$set(_vm.search, "document_number", $event.target.value);
+            }
+          }
+        })]), _vm._v(" "), _c("div", {
           staticClass: "col-md-3 mb-2"
         }, [_c("div", {
           staticClass: "form-group"
@@ -1988,7 +2044,7 @@ var render = function render() {
           staticClass: "form-control-label"
         }, [_vm._v("Fecha Inicio")]), _vm._v(" "), _c("datepicker", {
           attrs: {
-            value: _vm.search.date_start
+            value: _vm.search.desde
           },
           on: {
             input: _vm.getDateStart
@@ -2001,7 +2057,7 @@ var render = function render() {
           staticClass: "form-control-label"
         }, [_vm._v("Fecha Fin")]), _vm._v(" "), _c("datepicker", {
           attrs: {
-            value: _vm.search.date_end
+            value: _vm.search.hasta
           },
           on: {
             input: _vm.getDateEnd
@@ -2076,7 +2132,7 @@ var render = function render() {
       attrs: {
         role: "row"
       }
-    }, [_c("td", [_vm._v(_vm._s(item.val1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.val2))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.val3))]), _vm._v(" "), _c("td", {
+    }, [_c("td", [_vm._v(_vm._s(item.id))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.client.first_name + " " + item.client.last_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.delivery_date))]), _vm._v(" "), _c("td", [_c("strong", [_vm._v(_vm._s(item.order_status))])]), _vm._v(" "), _c("td", {
       staticClass: "text-right"
     }, [_c("div", {
       staticClass: "dropdown"
@@ -2140,7 +2196,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Name: activate to sort column ascending"
     }
-  }, [_vm._v("Columna 1\r\n              ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("ID\r\n              ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -2150,7 +2206,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Name: activate to sort column ascending"
     }
-  }, [_vm._v("Columna 2\r\n              ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Cliente\r\n              ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -2160,7 +2216,17 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Email: activate to sort column ascending"
     }
-  }, [_vm._v("Columna 3\r\n              ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Fecha de Entrega\r\n              ")]), _vm._v(" "), _c("th", {
+    staticClass: "sorting",
+    attrs: {
+      scope: "col",
+      tabindex: "0",
+      "aria-controls": "datatable-basic",
+      rowspan: "1",
+      colspan: "1",
+      "aria-label": "Email: activate to sort column ascending"
+    }
+  }, [_vm._v("Estado\r\n              ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -2237,7 +2303,7 @@ var staticRenderFns = [function () {
     staticClass: "card-header"
   }, [_c("h3", {
     staticClass: "mb-0"
-  }, [_vm._v("Lista de module")])]);
+  }, [_vm._v("Lista de pedidos")])]);
 }];
 render._withStripped = true;
 

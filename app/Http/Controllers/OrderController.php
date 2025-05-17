@@ -14,21 +14,38 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::where('status', true)
+
+        $documentNumber = $request->input('document_number');
+        $fromDate = $request->input('desde', now()->toDateString());
+        $toDate = $request->input('hasta', now()->toDateString());
+
+        $ordersQuery = Order::where('status', true)
             ->with([
                 'client',
                 'user',
                 'order_details' => function ($query) {
-                    $query->where('status', true);
+                    $query->where('status', true); // Sólo detalles activos
                 }
-            ])
-            ->get();
+            ]);
+
+        // Aplica filtro por número de documento si está presente
+        if (!empty($documentNumber)) {
+            $ordersQuery->whereHas('client', function ($query) use ($documentNumber) {
+                $query->where('document_number', $documentNumber);
+            });
+        }
+
+        // Aplica filtro por rango de fechas de entrega
+        $ordersQuery->whereBetween('issue_date', [$fromDate, $toDate]);
+
+        // Obtiene las órdenes filtradas
+        $orders = $ordersQuery->get();
 
         return response()->json([
             'success' => true,
-            'msg' => 'Órdenes activas obtenidas correctamente.',
+            'msg' => 'Órdenes obtenidas correctamente.',
             'data' => $orders
         ]);
     }
@@ -41,6 +58,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+
         $validated = $request->validate([
             'client_id' => 'required|exists:clients,id',
             'delivery_date' => 'required|date',
@@ -49,6 +67,7 @@ class OrderController extends Controller
             'user_id' => 'required|exists:users,id',
             'order_details' => 'required|array|min:1',
             'order_details.*.product_id' => 'required|exists:products,id',
+            'order_details.*.product' => 'required',
             'order_details.*.description' => 'nullable|string',
             'order_details.*.quantity' => 'required|integer|min:1'
         ]);
@@ -67,7 +86,7 @@ class OrderController extends Controller
             ]);
 
             foreach ($validated['order_details'] as $detail) {
-                $order->details()->create([
+                $order->order_details()->create([ // Cambiado a order_details()
                     'product_id' => $detail['product_id'],
                     'description' => $detail['description'] ?? null,
                     'quantity' => $detail['quantity'],
@@ -80,7 +99,7 @@ class OrderController extends Controller
             return response()->json([
                 'success' => true,
                 'msg' => 'Orden creada correctamente.',
-                'data' => $order->load(['client', 'user', 'details'])
+                'data' => $order->load(['client', 'user', 'order_details']) // Cambiado a order_details
             ], 201);
 
         } catch (\Exception $e) {
@@ -88,7 +107,7 @@ class OrderController extends Controller
             return response()->json([
                 'success' => false,
                 'msg' => 'Ocurrió un error al crear la orden.',
-                'data' => []
+                'data' => $e->getMessage()
             ], 500);
         }
     }
@@ -135,7 +154,7 @@ class OrderController extends Controller
             'order_status' => 'required|in:En Proceso,Pedido,Cotizado,Preventa,Pagado',
             'issue_date' => 'required|date',
             'user_id' => 'required|exists:users,id',
-            'status'  => 'boolean',
+            'status' => 'boolean',
             'order_details' => 'nullable|array',
             'order_details.*.id' => 'sometimes|integer|exists:order_details,id',
             'order_details.*.product_id' => 'required_with:order_details|exists:products,id',

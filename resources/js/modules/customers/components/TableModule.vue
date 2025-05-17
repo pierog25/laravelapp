@@ -10,10 +10,7 @@
               <th scope="col" class="sorting" tabindex="0" aria-controls="datatable-basic" rowspan="1" colspan="1"
                   aria-label="Name: activate to sort column ascending">Nombres
               </th>
-              <th scope="col" class="sorting" tabindex="0" aria-controls="datatable-basic" rowspan="1" colspan="1"
-                  aria-label="Name: activate to sort column ascending">Tipo Documento
-              </th>
-              <th scope="col" class="sorting" tabindex="0" aria-controls="datatable-basic" rowspan="1" colspan="1"
+              <th scope="col" class="sorting" tabindex="0" aria-controls="datatable-basic" rowspan="2" colspan="2"
                   aria-label="Email: activate to sort column ascending">Documento
               </th>
               <th scope="col" class="sorting" tabindex="0" aria-controls="datatable-basic" rowspan="1" colspan="1"
@@ -28,11 +25,13 @@
             </thead>
             <tbody>
             <tr role="row" class="odd" v-for="(item,index) in list" :key="`row_${index}`">
-              <td>{{ item.val1 }}</td>
-              <td>{{ item.val2 }}</td>
-              <td>{{ item.val3 }}</td>
-              <td>{{ item.val4 }}</td>
-              <td>{{ item.val5 }}</td>
+              <td>{{ item.first_name +" "+item.last_name }}</td>
+              <td>
+                <strong>Tipo Doc: </strong>{{ item.document_type.name }}<br>
+                <strong>Documento: </strong>{{ item.document_number }}
+              </td>
+              <td>{{ item.email }}</td>
+              <td>{{ item.address }}</td>
               <td class="text-right">
                 <div class="dropdown">
                   <a class="btn btn-sm btn-icon-only btn-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -78,19 +77,20 @@ export default {
   },
   methods: {
     setPagination(data) {
+      console.log(data, "data");
       this.list = data.list
       this.cantPages = data.cantPages
       this.listFiltered = data.listFiltered
     },
     editItem(item){
-      this.$router.push({name:'updatemodule',params:{ status: 'EDIT', item: item }})
+      this.$router.push({name:'updatecustomers',params:{ status: 'EDIT', item: item }})
     },
     async deleteItem(item){
       const result = await Alerts.showConfirmDeleteMessage();
 
       if(result.isConfirmed){
         try{
-          const response = await axios.delete(`/ruta-module/${item.id}`,{...item})
+          const response = await axios.delete(`/api/client/${item.id}`,{...item})
           if(response.status === 200){
             const resultData = response.data;
             if(resultData.code === 'Success'){

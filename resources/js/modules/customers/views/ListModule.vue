@@ -38,21 +38,24 @@ export default {
       /** USAR EN CASO SE HAGA LA PAGINACION EN BACKEND*/
       //body.start = this.paginate
 
-      let url = 'ruta-module'
+      let url = '/api/client'
 
       try {
-        const result = await axios.get(url);
+        const result = await axios.get(url,{
+          params: body
+        });
         if (result.status === 200) {
-          const resultData = result.data;
-          if (resultData.code) {
-            Alerts.showToastMessage(resultData.Message, 'center');
-            list = resultData.data;
+          console.log(result.data, "result");
+          list = result.data;
+          // if (resultData.code) {
+          //   Alerts.showToastMessage(resultData.Message, 'center');
+          //   list = resultData.data;
 
-            /** USAR EN CASO SE HAGA LA PAGINACION EN BACKEND*/
-            //this.count = resultData.count
-          }else{
-            Alerts.showToastErrorMessage(resultData.Message,'center')
-          }
+          //   /** USAR EN CASO SE HAGA LA PAGINACION EN BACKEND*/
+          //   //this.count = resultData.count
+          // }else{
+          //   Alerts.showToastErrorMessage(resultData.Message,'center')
+          // }
           this.is_search = false;
         }
       } catch (e) {

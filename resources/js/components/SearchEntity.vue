@@ -8,7 +8,7 @@
             <button type="button" class="btn btn-danger" @click="deleteEntity" v-if="entity.exist"><i
                 class="fas fa-times"></i></button>
             <button type="button" class="btn  btn-warning" @click="createEntity" v-if="not_registered"><i
-                class="fas fa-plus"/></button>
+                class="fas fa-plus" /></button>
             <button type="button" class="btn btn-primary" @click="checkeForm" :disabled="entity.is_search"><i
                 class="fas fa-search"></i></button>
           </div>
@@ -22,7 +22,7 @@
         <button type="button" class="btn btn-danger" @click="deleteEntity" v-if="entity.exist"><i
             class="fas fa-times"></i></button>
         <button type="button" class="btn  btn-warning" @click="createEntity" v-if="not_registered"><i
-            class="fas fa-plus"/></button>
+            class="fas fa-plus" /></button>
         <button type="button" class="btn btn-primary" @click="checkeForm" :disabled="entity.is_search"><i
             class="fas fa-search"></i></button>
       </div>
@@ -31,22 +31,25 @@
       <div class="card-body">
         <div class="form-row">
           <div class="col-md-4 col-sm-12">
-            <strong>Tipo documento: </strong>{{ entity.type_document.abbreviation }}
+            <strong>Tipo documento: </strong>{{ entity.document_type.name }}
           </div>
           <div class="col-md-4 col-sm-12">
-            <strong>Nº documento: </strong>{{ entity.document?entity.document:entity.number_document }}
+            <strong>Nº documento: </strong>{{ entity.document_number }}
           </div>
           <div class="col-md-4 col-sm-12">
-            <strong>Nombre: </strong>{{ entity.name?entity.name:entity.legal_name }}
+            <strong>Nombre: </strong>{{ entity.first_name+" "+entity.last_name }}
           </div>
         </div>
       </div>
     </div>
-    <div class="modal fade" :id="'modal-create-entity-'+title" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-modal="true">
+    <div class="modal fade" id="modal-create-entity-customer" tabindex="-1" role="dialog"
+      aria-labelledby="modal-form" aria-modal="true">
       <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-body p-0" v-if="not_registered">
-            <FormPerson v-if="this.form.entity.length===8 || this.form.entity.length===9 || this.form.entity.length===12" ref="person-search" @sendForm="sendFormPerson"></FormPerson>
+            <FormPerson
+              v-if="this.form.entity.length === 8 || this.form.entity.length === 9 || this.form.entity.length === 12"
+              ref="person-search" @sendForm="sendFormPerson"></FormPerson>
           </div>
         </div>
       </div>
@@ -85,28 +88,28 @@ export default {
     }
   },
   methods: {
-    sendFormPerson(){
-      $('#modal-create-entity').modal('hide');
-      this.searchEntity('find-person-by-document')
+    sendFormPerson() {
+      $('#modal-create-entity-customer').modal('hide');
+      this.searchEntity('/api/client')
     },
-    sendFormCompany(){
-      $('#modal-create-entity').modal('hide');
-      this.searchEntity('find-company-by-document')
+    sendFormCompany() {
+      $('#modal-create-entity-customer').modal('hide');
+      this.searchEntity('/api/client')
     },
     setEntity(document) {
       this.form.entity = document
 
       if (this.form.entity.length === 8 || this.form.entity.length === 9 || this.form.entity.length === 12) {
-        this.searchEntity('find-person-by-document')
+        this.searchEntity('/api/client/')
       } else if (this.form.entity.length === 11) {
-        this.searchEntity('find-company-by-document')
+        this.searchEntity('/api/client/')
       }
     },
     async setPersonByID(id) {
-      await this.searchEntity(`person/${id}`)
+      await this.searchEntity(`/api/client`)
     },
     async setCompanyByID(id) {
-      await this.searchEntity(`company/${id}`)
+      await this.searchEntity(`/api/client`)
 
     },
     resetEntity() {
@@ -118,25 +121,25 @@ export default {
     },
     checkeForm() {
       let url = '';
-      if(this.title === 'PERSONA'){
+      if (this.title === 'PERSONA') {
         if (this.form.entity.length !== 8 && this.form.entity.length !== 9 && this.form.entity.length !== 12) {
-          Alerts.showToastErrorMessage('El número de documeto debe ser de 8, 9 o 12 dígitos','center')
+          Alerts.showToastErrorMessage('El número de documeto debe ser de 8, 9 o 12 dígitos', 'center')
           return;
         }
-        url = 'find-person-by-document';
-      }else if (this.title === 'EMPRESA'){
+        url = '/api/client';
+      } else if (this.title === 'EMPRESA') {
         if (this.form.entity.length !== 11) {
-          Alerts.showToastErrorMessage('El número de documeto debe ser de 11 dígitos','center')
+          Alerts.showToastErrorMessage('El número de documeto debe ser de 11 dígitos', 'center')
           return;
         }
-        url = 'find-company-by-document';
-      }else{
+        url = '/api/client';
+      } else {
         if (this.form.entity.length === 8 || this.form.entity.length === 9 || this.form.entity.length === 12) {
-          url = 'find-person-by-document';
+          url = '/api/client';
         } else if (this.form.entity.length === 11) {
-          url = 'find-company-by-document';
-        }else{
-          Alerts.showToastErrorMessage('El número de documeto debe ser de 8, 9, 11 o 12 dígitos','center')
+          url = '/api/client';
+        } else {
+          Alerts.showToastErrorMessage('El número de documeto debe ser de 8, 9, 11 o 12 dígitos', 'center')
           return;
         }
       }
@@ -146,29 +149,43 @@ export default {
       this.entity.exist = false
       this.entity.is_search = true
 
-      if(this.form.entity!=''){
-        url+= '/'+this.form.entity
-      }
+      // if(this.form.entity!=''){
+      //   url+= '/'+this.form.entity
+      // }
       try {
-        const response = await axios.get(`/${url}`).then(response => {
+        const response = await axios.get(`${url}`, {
+          params: {
+            "document": this.form.entity
+          }
+        }).then(response => {
 
           if (response.status === 200) {
-            const responseData = response.data
-            if (responseData.code === 'Success') {
-              Alerts.showToastMessage(responseData.Message, 'center')
-              this.entity = responseData.data
-
-              this.$emit('entity', {...this.entity})
-
+            if (response.data.length > 0) {
+              this.entity = response.data.length > 0 ? response.data[0] : null;
+              this.$emit('entity', { ...this.entity })
               this.entity.exist = true
               this.entity.is_search = false
               this.not_registered = false
-
-              this.form.entity = responseData.data.document?responseData.data.document:responseData.data.number_document
-
-            } else if (responseData.code === 'Error') {
+            } else {
+              this.entity.is_search = false
               this.not_registered = true
             }
+            // const responseData = response.data
+            // if (responseData.code === 'Success') {
+            //   Alerts.showToastMessage(responseData.Message, 'center')
+            //   this.entity = count(responseData)
+
+            //   this.$emit('entity', {...this.entity})
+
+            //   this.entity.exist = true
+            //   this.entity.is_search = false
+            //   this.not_registered = false
+
+            //   this.form.entity = responseData.data.document?responseData.data.document:responseData.data.number_document
+
+            // } else if (responseData.code === 'Error') {
+            //   this.not_registered = true
+            // }
           }
         }).catch((err) => {
           this.entity.is_search = false
@@ -186,18 +203,21 @@ export default {
       this.resetEntity()
       this.form.entity = ''
       this.not_registered = false
-      this.$emit('deleteEntity', {...this.entity})
+      this.$emit('deleteEntity', { ...this.entity })
     },
     createEntity() {
       console.log(this.form.entity);
       console.log(this.title);
-      if(this.form.entity.length==11){
-        this.$refs['company-search'].entitySearch(this.form.entity)
-        $('#modal-create-entity-'+this.title).modal('show');
-      }else{
-        this.$refs['person-search'].entitySearch(this.form.entity)
-        $('#modal-create-entity-'+this.title).modal('show');
-      }
+      // if (this.form.entity.length == 11) {
+      //   this.$refs['company-search'].entitySearch(this.form.entity)
+      //   $('#modal-create-entity-' + this.title).modal('show');
+      // } else {
+      //   this.$refs['person-search'].entitySearch(this.form.entity)
+      //   $('#modal-create-entity-' + this.title).modal('show');
+      // }
+      this.$refs['person-search'].entitySearch(this.form.entity)
+      $('#modal-create-entity-customer').modal('show');
+
     }
   },
   mounted() {
@@ -208,11 +228,11 @@ export default {
       let regex = /[^0-9]/gi;
       this.form.entity = document.replace(regex, "");
 
-      if(document.length === 8){
+      if (document.length === 8) {
 
-      }else if(document.length === 9){
+      } else if (document.length === 9) {
 
-      }else{
+      } else {
         this.not_registered = false
       }
     }
@@ -224,6 +244,7 @@ export default {
 .modal-xl {
   max-width: 800px;
 }
+
 @media (min-width: 1200px) {
   .modal-xl {
     max-width: 1140px;

@@ -8,13 +8,16 @@
             <thead class="thead-light">
             <tr role="row">
               <th scope="col" class="sorting" tabindex="0" aria-controls="datatable-basic" rowspan="1" colspan="1"
-                  aria-label="Name: activate to sort column ascending">Columna 1
+                  aria-label="Name: activate to sort column ascending">ID
               </th>
               <th scope="col" class="sorting" tabindex="0" aria-controls="datatable-basic" rowspan="1" colspan="1"
-                  aria-label="Name: activate to sort column ascending">Columna 2
+                  aria-label="Name: activate to sort column ascending">Cliente
               </th>
               <th scope="col" class="sorting" tabindex="0" aria-controls="datatable-basic" rowspan="1" colspan="1"
-                  aria-label="Email: activate to sort column ascending">Columna 3
+                  aria-label="Email: activate to sort column ascending">Fecha de Entrega
+              </th>
+              <th scope="col" class="sorting" tabindex="0" aria-controls="datatable-basic" rowspan="1" colspan="1"
+                  aria-label="Email: activate to sort column ascending">Estado
               </th>
               <th scope="col" class="sorting" tabindex="0" aria-controls="datatable-basic" rowspan="1" colspan="1"
                   aria-label=": activate to sort column ascending"></th>
@@ -22,9 +25,10 @@
             </thead>
             <tbody>
             <tr role="row" class="odd" v-for="(item,index) in list" :key="`row_${index}`">
-              <td>{{ item.val1 }}</td>
-              <td>{{ item.val2 }}</td>
-              <td>{{ item.val3 }}</td>
+              <td>{{ item.id }}</td>
+              <td>{{ item.client.first_name+" "+item.client.last_name }}</td>
+              <td>{{ item.delivery_date }}</td>
+              <td><strong>{{ item.order_status }}</strong></td>
               <td class="text-right">
                 <div class="dropdown">
                   <a class="btn btn-sm btn-icon-only btn-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -75,7 +79,7 @@ export default {
       this.listFiltered = data.listFiltered
     },
     editItem(item){
-      this.$router.push({name:'updatemodule',params:{ status: 'EDIT', item: item }})
+      this.$router.push({name:'updateorders',params:{ status: 'EDIT', item: item }})
     },
     async deleteItem(item){
       const result = await Alerts.showConfirmDeleteMessage();

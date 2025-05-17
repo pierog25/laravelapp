@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"module":"module","vendors~home~listmodule~newmodule":"vendors~home~listmodule~newmodule","home":"home","newmodule":"newmodule","vendors~listmodule":"vendors~listmodule","listmodule":"listmodule"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"module":"module","vendors~home~listmodule~newmodule":"vendors~home~listmodule~newmodule","home":"home","vendors~listmodule~newmodule":"vendors~listmodule~newmodule","listmodule":"listmodule","newmodule":"newmodule"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -75284,20 +75284,20 @@ __webpack_require__.r(__webpack_exports__);
     path: '/customers/new',
     name: 'newcustomers',
     component: function component() {
-      return Promise.all(/*! import() | newmodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("newmodule")]).then(__webpack_require__.bind(null, /*! ../views/FormModule.vue */ "./resources/js/modules/customers/views/FormModule.vue"));
+      return Promise.all(/*! import() | newmodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("vendors~listmodule~newmodule"), __webpack_require__.e("newmodule")]).then(__webpack_require__.bind(null, /*! ../views/FormModule.vue */ "./resources/js/modules/customers/views/FormModule.vue"));
     }
   }, {
     path: '/customers/update',
     name: 'updatecustomers',
     component: function component() {
-      return Promise.all(/*! import() | updatemodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("newmodule")]).then(__webpack_require__.bind(null, /*! ../views/FormModule.vue */ "./resources/js/modules/customers/views/FormModule.vue"));
+      return Promise.all(/*! import() | updatemodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("vendors~listmodule~newmodule"), __webpack_require__.e("newmodule")]).then(__webpack_require__.bind(null, /*! ../views/FormModule.vue */ "./resources/js/modules/customers/views/FormModule.vue"));
     },
     props: true
   }, {
     path: '/customers/listar',
     name: 'listcustomers',
     component: function component() {
-      return Promise.all(/*! import() | listmodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("vendors~listmodule"), __webpack_require__.e("listmodule")]).then(__webpack_require__.bind(null, /*! ../views/ListModule.vue */ "./resources/js/modules/customers/views/ListModule.vue"));
+      return Promise.all(/*! import() | listmodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("vendors~listmodule~newmodule"), __webpack_require__.e("listmodule")]).then(__webpack_require__.bind(null, /*! ../views/ListModule.vue */ "./resources/js/modules/customers/views/ListModule.vue"));
     }
   }]
 });
@@ -75353,20 +75353,20 @@ __webpack_require__.r(__webpack_exports__);
     path: '/module/new',
     name: 'newmodule',
     component: function component() {
-      return Promise.all(/*! import() | newmodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("newmodule")]).then(__webpack_require__.bind(null, /*! ../views/FormModule.vue */ "./resources/js/modules/module_base/views/FormModule.vue"));
+      return Promise.all(/*! import() | newmodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("vendors~listmodule~newmodule"), __webpack_require__.e("newmodule")]).then(__webpack_require__.bind(null, /*! ../views/FormModule.vue */ "./resources/js/modules/module_base/views/FormModule.vue"));
     }
   }, {
     path: '/module/update',
     name: 'updatemodule',
     component: function component() {
-      return Promise.all(/*! import() | updatemodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("newmodule")]).then(__webpack_require__.bind(null, /*! ../views/FormModule.vue */ "./resources/js/modules/module_base/views/FormModule.vue"));
+      return Promise.all(/*! import() | updatemodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("vendors~listmodule~newmodule"), __webpack_require__.e("newmodule")]).then(__webpack_require__.bind(null, /*! ../views/FormModule.vue */ "./resources/js/modules/module_base/views/FormModule.vue"));
     },
     props: true
   }, {
     path: '/module/listar',
     name: 'listmodule',
     component: function component() {
-      return Promise.all(/*! import() | listmodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("vendors~listmodule"), __webpack_require__.e("listmodule")]).then(__webpack_require__.bind(null, /*! ../views/ListModule.vue */ "./resources/js/modules/module_base/views/ListModule.vue"));
+      return Promise.all(/*! import() | listmodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("vendors~listmodule~newmodule"), __webpack_require__.e("listmodule")]).then(__webpack_require__.bind(null, /*! ../views/ListModule.vue */ "./resources/js/modules/module_base/views/ListModule.vue"));
     }
   }]
 });
@@ -75394,20 +75394,20 @@ __webpack_require__.r(__webpack_exports__);
     path: '/orders/new',
     name: 'neworders',
     component: function component() {
-      return Promise.all(/*! import() | newmodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("newmodule")]).then(__webpack_require__.bind(null, /*! ../views/FormModule.vue */ "./resources/js/modules/orders/views/FormModule.vue"));
+      return Promise.all(/*! import() | newmodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("vendors~listmodule~newmodule"), __webpack_require__.e("newmodule")]).then(__webpack_require__.bind(null, /*! ../views/FormModule.vue */ "./resources/js/modules/orders/views/FormModule.vue"));
     }
   }, {
     path: '/orders/update',
     name: 'updateorders',
     component: function component() {
-      return Promise.all(/*! import() | updatemodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("newmodule")]).then(__webpack_require__.bind(null, /*! ../views/FormModule.vue */ "./resources/js/modules/orders/views/FormModule.vue"));
+      return Promise.all(/*! import() | updatemodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("vendors~listmodule~newmodule"), __webpack_require__.e("newmodule")]).then(__webpack_require__.bind(null, /*! ../views/FormModule.vue */ "./resources/js/modules/orders/views/FormModule.vue"));
     },
     props: true
   }, {
     path: '/orders/listar',
     name: 'listorders',
     component: function component() {
-      return Promise.all(/*! import() | listmodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("vendors~listmodule"), __webpack_require__.e("listmodule")]).then(__webpack_require__.bind(null, /*! ../views/ListModule.vue */ "./resources/js/modules/orders/views/ListModule.vue"));
+      return Promise.all(/*! import() | listmodule */[__webpack_require__.e("vendors~home~listmodule~newmodule"), __webpack_require__.e("vendors~listmodule~newmodule"), __webpack_require__.e("listmodule")]).then(__webpack_require__.bind(null, /*! ../views/ListModule.vue */ "./resources/js/modules/orders/views/ListModule.vue"));
     }
   }]
 });

@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <h3 class="mb-0">Lista de module</h3>
+      <h3 class="mb-0">Lista de pedidos</h3>
     </div>
     <div class="card-body">
       <FiltersForm :is_search="is_search" @search="getSearch"></FiltersForm>
@@ -38,20 +38,23 @@ export default {
       /** USAR EN CASO SE HAGA LA PAGINACION EN BACKEND*/
       //body.start = this.paginate
 
-      let url = 'ruta-module'
+      let url = '/api/order/'
 
       try {
-        const result = await axios.get(url);
+        const result = await axios.get(url,{
+          params: body
+        });
         if (result.status === 200) {
           const resultData = result.data;
-          if (resultData.code) {
-            Alerts.showToastMessage(resultData.Message, 'center');
+          if (resultData.success) {
+            Alerts.showToastMessage(resultData.msg, 'center');
+            console.log(resultData, "RESULT-DATA")
             list = resultData.data;
 
             /** USAR EN CASO SE HAGA LA PAGINACION EN BACKEND*/
             //this.count = resultData.count
           }else{
-            Alerts.showToastErrorMessage(resultData.Message,'center')
+            Alerts.showToastErrorMessage(resultData.msg,'center')
           }
           this.is_search = false;
         }

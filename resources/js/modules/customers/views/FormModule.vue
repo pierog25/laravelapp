@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <h3 class="mb-0">Registro del nuevo cliente</h3>
+      <h3 class="mb-0">Registro del nuevo pedido</h3>
     </div>
     <div class="card-body">
       <validation-observer ref="validation-observer" v-slot="{ handleSubmit }">
@@ -10,23 +10,21 @@
             <div class="col-md-4 mb-2">
               <validation-provider name="NOMBRES" rules="required" v-slot="{ errors }">
                 <label class="form-control-label" for="nombres">Nombres</label>
-                <input type="text" v-model="form.names" class="form-control" id="nombres" placeholder="Nombres">
+                <input type="text" v-model="form.first_name" class="form-control" id="nombres" placeholder="Nombres">
                 <span class="is-invalid">{{ errors[0] }}</span>
               </validation-provider>
             </div>
             <div class="col-md-4 mb-2">
-              <validation-provider name="APELLIDO PATERNO" rules="required" v-slot="{ errors }">
-                <label class="form-control-label" for="apellido_paterno">Apellido Paterno</label>
-                <input type="text" v-model="form.paternal_surname" class="form-control" id="apellido_paterno"
-                  placeholder="Apellido Paterno">
+              <validation-provider name="APELLIDOS" rules="required" v-slot="{ errors }">
+                <label class="form-control-label" for="apellidos">Apellidos</label>
+                <input type="text" v-model="form.last_name" class="form-control" id="apellidos" placeholder="Apellidos">
                 <span class="is-invalid">{{ errors[0] }}</span>
               </validation-provider>
             </div>
             <div class="col-md-4 mb-2">
-              <validation-provider name="APELLIDO MATERNO" rules="required" v-slot="{ errors }">
-                <label class="form-control-label" for="apellido_materno">Apellido Materno</label>
-                <input type="text" v-model="form.maternal_surname" class="form-control" id="apellido_materno"
-                  placeholder="Apellido Materno">
+              <validation-provider name="TELEFONO" rules="required" v-slot="{ errors }">
+                <label class="form-control-label" for="telefono">Telefono</label>
+                <input type="text" v-model="form.phone" class="form-control" id="telefono" placeholder="TELEFONO">
                 <span class="is-invalid">{{ errors[0] }}</span>
               </validation-provider>
             </div>
@@ -35,13 +33,21 @@
             <div class="col-md-4 mb-2">
               <label class="form-control-label">Tipo de Documento</label>
               <validation-provider name="Tipo Documento" rules="required" v-slot="{ errors }">
-                <multiselect v-model="form.type_document" :options="typeDocuments" @select="selectedTypeDocument"
+                <multiselect v-model="document_selected" :options="typeDocuments" @select="selectedTypeDocument"
                   placeholder="Seleccione un Tipo Documento" :show-labels="false" style="font-size: 13px"
-                  track-by="abbreviation" label="abbreviation">
+                  track-by="name" label="name">
                   <template slot="singleLabel" slot-scope="{ option }"><span class="badge badge-pill badge-success">{{
-                      option.abbreviation }}</span>
+                    option.name }}</span>
                   </template>
                 </multiselect>
+                <span class="is-invalid">{{ errors[0] }}</span>
+              </validation-provider>
+            </div>
+            <div class="col-md-4 mb-2">
+              <validation-provider name="DOCUMENTO" rules="required" v-slot="{ errors }">
+                <label class="form-control-label" for="documento">N° Documento</label>
+                <input type="text" v-model="form.document_number" class="form-control" id="documento"
+                  placeholder="Documento">
                 <span class="is-invalid">{{ errors[0] }}</span>
               </validation-provider>
             </div>
@@ -52,7 +58,9 @@
                 <span class="is-invalid">{{ errors[0] }}</span>
               </validation-provider>
             </div>
-            <div class="col-md-4 mb-2">
+          </div>
+          <div class="form-row">
+            <div class="col-md-12 mb-2">
               <validation-provider name="DIRECCION" rules="required" v-slot="{ errors }">
                 <label class="form-control-label" for="direccion">Dirección</label>
                 <input type="text" v-model="form.address" class="form-control" id="direccion" placeholder="Dirección">
@@ -82,14 +90,15 @@ export default {
   data() {
     return {
       form: {
-        names: '',
-        maternal_surname: '',
-        paternal_surname: '',
-        type_document: "",
-        document: "",
+        first_name: '',
+        last_name: '',
+        id_document_type: "",
+        document_number: "",
+        phone: "",
         email: "",
         address: ""
       },
+      document_selected: {},
       text_button: 'Crear',
       is_send_data: false,
       myFile: undefined,
@@ -97,13 +106,7 @@ export default {
       files: [],
       person: {},
       myKey: [],
-      typeDocuments:[
-        {
-          "id": 1,
-          "name": "Documento Nacional de Identidad",
-          "abbreviation":"DNI"
-        }
-      ]
+      typeDocuments: []
 
     }
   },
@@ -117,8 +120,32 @@ export default {
     },
   },
   methods: {
-    selectedTypeDocument(typeDocument){
-      this.form.type_document = typeDocument.id;
+    entitySearch(entity) {
+      console.log(entity.length)
+      if (entity.length === 8) {
+        this.document_selected = {
+          "id": 1,
+          "name": "DNI"
+        }
+      }
+      if (entity.length === 11) {
+        this.document_selected = {
+          "id": 3,
+          "name": "RUC"
+        }
+      }
+      if (entity.length === 12) {
+        this.document_selected = {
+          "id": 2,
+          "name": "Pasaporte"
+        }
+      }
+      this.selectedTypeDocument(this.document_selected)
+      this.form.document = entity
+    },
+    selectedTypeDocument(typeDocument) {
+      console.log(typeDocument, "typeDocument");
+      this.form.id_document_type = typeDocument.id;
     },
     getEntity(entity) {
       this.person = entity
@@ -143,8 +170,13 @@ export default {
     },
     resetForm() {
       this.form = {
-        value1: '',
-        value2: '',
+        first_name: '',
+        last_name: '',
+        id_document_type: "",
+        document_number: "",
+        phone: "",
+        email: "",
+        address: ""
       }
       this.$refs['validation-observer'].reset();
     },
@@ -153,12 +185,12 @@ export default {
       try {
         const body = { ...this.form }
 
-        const result = await axios.put(`/url-module/${body.id}`, { ...body }).then(async (result) => {
+        const result = await axios.put(`/api/client/${body.id}`, { ...body }).then(async (result) => {
           if (result.status === 200) {
             Alerts.showUpdatedMessage()
             this.resetForm()
 
-            this.$router.push({ name: 'listmodule' })
+            this.$router.push({ name: 'listcustomers' })
           }
         }).catch((err) => {
           if (err.response.data.code == "Error") {
@@ -176,10 +208,12 @@ export default {
       try {
         const body = { ...this.form }
 
-        const result = await axios.post('url-module', { ...body });
-        if (result.status === 200) {
+        const result = await axios.post('/api/client', { ...body });
+        console.log(result, "result");
+        if (result.status === 201) {
           Alerts.showCreatedMessage()
           this.resetForm()
+          this.$emit('sendForm');
         }
       } catch (e) {
         Alerts.showErrorMessage()
@@ -189,16 +223,29 @@ export default {
     validateStatus() {
       if (this.status === 'EDIT') {
         this.form = { ...this.item }
+        this.document_selected = this.form.document_type
         this.text_button = 'Actualizar'
       } else {
-        if (this.$route.name === 'updatemodule' && this.item === undefined) {
-          this.$router.push({ name: 'newmodule' })
+        if (this.$route.name === 'updatecustomers' && this.item === undefined) {
+          this.$router.push({ name: 'newcustomers' })
         }
+      }
+    },
+    async getTypeDocuments() {
+      try {
+        const result = await axios.get(`/api/document-type`);
+        if (result.status == 200) {
+          this.typeDocuments = result.data;
+        }
+        console.log(result, "result")
+      } catch (e) {
+        this.typeDocuments = [];
       }
     }
   },
   mounted() {
-    this.validateStatus()
+    this.validateStatus();
+    this.getTypeDocuments();
   },
   watch: {
     status: function (status) {

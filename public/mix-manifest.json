@@ -5,7 +5,8 @@
     "/listmodule.js": "/listmodule.js",
     "/module.js": "/module.js",
     "/newmodule.js": "/newmodule.js",
-    "/vendors~listmodule.js": "/vendors~listmodule.js",
+    "/vendors~listmodule~newmodule.js": "/vendors~listmodule~newmodule.js",
     "/css/all.css": "/css/all.css",
-    "/vendors~home~listmodule~newmodule.js": "/vendors~home~listmodule~newmodule.js"
+    "/vendors~home~listmodule~newmodule.js": "/vendors~home~listmodule~newmodule.js",
+    "/vendors~listmodule.js": "/vendors~listmodule.js"
 }

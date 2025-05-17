@@ -1,107 +1,112 @@
 <template>
-  <div class="row" v-if="records>per_page">
-    <div class="col-12 col-md-5">
-      <div class="dataTables_info d-flex justify-content-md-start justify-content-center" id="datatable-basic_info" role="status" aria-live="polite">
-        Mostrando {{ records_init_page }} a {{ records_end_page }} de {{ records }} resultados
+  <div class="row" v-if="listAll.length>=10">
+        <div class="col-sm-12 col-md-5">
+          <div class="dataTables_info" id="datatable-basic_info" role="status" aria-live="polite">
+            Mostrando {{ actualPage.count_pagination }} a {{ list.length }} de {{ listAll.length }} resultados
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-7">
+          <div class="dataTables_paginate paging_simple_numbers" id="datatable-basic_paginate">
+            <ul class="pagination justify-content-end">
+              <li class="paginate_button page-item previous" id="datatable-basic_previous">
+                <a href="#" aria-controls="datatable-basic" data-dt-idx="0" tabindex="0" class="page-link" @click.prevent="changePaginate(-1)">
+                  <i class="fas fa-angle-left"></i>
+                </a>
+              </li>
+              <li :class="'paginate_button page-item '+item.class" v-for="(item,index) in cantPages">
+                <a v-if="cantPages.length > 10 && (actualPage.index === index || actualPage.index === index + 1 || actualPage.index === index - 1 || index === cantPages.length - 1 || index === 0 || ((actualPage.index  <= 4 || actualPage.index >= cantPages.length - 4) && (index === cantPages.length - 2 || index === 1))) " href="#" aria-controls="datatable-basic" data-dt-idx="1" tabindex="0" class="page-link" @click.prevent="sendPaginate(item)">{{ item.pagination }}</a>
+                <a v-else-if="cantPages.length > 10 && (actualPage.index + 2 === index || actualPage.index - 2 === index)" href="#" aria-controls="datatable-basic" data-dt-idx="1" tabindex="0" class="page-link" @click.prevent="() => {return null}">...</a>
+                <a v-else-if="cantPages.length <= 10" href="#" aria-controls="datatable-basic" data-dt-idx="1" tabindex="0" class="page-link" @click.prevent="sendPaginate(item)">{{ item.pagination }}</a>
+              </li>
+              <li class="paginate_button page-item next" id="datatable-basic_next">
+                <a href="#" aria-controls="datatable-basic" data-dt-idx="2" tabindex="0" class="page-link" @click.prevent="changePaginate(+1)">
+                  <i class="fas fa-angle-right"></i>
+                </a>
+              </li><!---->
+            </ul>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="col-12 col-md-7">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-md-end justify-content-center mt-3 mt-md-0">
-          <li class="page-item">
-            <button class="page-link" aria-label="Previous" @click="sendPage(page--)" :disabled="disabled">
-              <i class="fa fa-angle-left"></i>
-              <span class="sr-only">Previous</span>
-            </button>
-          </li>
-          <li class="page-item" v-if="pages_per_records > 1 && !pages_show.includes(1)">
-            <button class="page-link" @click="sendPage(page=1)" :disabled="disabled">{{ 1 }}</button>
-          </li>
-          <li class="page-item" v-for="pageNumber in pages_show" :class="[pageNumber === page ? 'active' : '']">
-            <button @click="sendPage(page=pageNumber)" class="page-link" :disabled="disabled">{{ pageNumber }}</button>
-          </li>
-          <li class="page-item" v-if="pages_per_records > 1 && !pages_show.includes(last_page)">
-            <button class="page-link" @click="sendPage(page=last_page)" :disabled="disabled">{{ last_page }}</button>
-          </li>
-          <li class="page-item">
-            <button class="page-link" aria-label="Next" @click="sendPage(page++)" :disabled="disabled">
-              <i class="fa fa-angle-right"></i>
-              <span class="sr-only">Next</span>
-            </button>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </div>
 </template>
-
 <script>
 export default {
-  data(){
+  data() {
     return {
-      page: this.value,
-      pages_per_records: 0,
-      last_page: 0,
-      max_pages: 3,
-      pages: [],
-    }
+      list: [],
+      listFiltered: [],
+      cantPages: [],
+      count: 0,
+      actualPage: {index: 0,pagination: 1,class:'active',count_pagination:1}
+    };
   },
-  props: {
-    value: {
-      type: Number,
-      default: 1
-    },
-    records: {
-      type: Number,
-      default: 0
-    },
-    per_page: {
-      type: Number,
-      default: 25
-    },
-    disabled: {
-      type: Boolean,
-      default: false
+  props:{
+    listAll: {
+      type:Array
     },
   },
   methods: {
-    sendPage(value) {
-      this.$emit('input', this.page)
-      this.$emit('paginate', this.page)
-    },
-    setPages(){
-      this.pages = [];
-      this.pages_per_records = Math.ceil(this.records / this.per_page)
-      for (let i = 1; i <= this.pages_per_records; i++){
-        this.pages.push(i);
+    filterList(list) {
+      this.cantPages = [];
+      this.listFiltered = [];
+
+      this.count = list.length
+      if (list.length >= 10) {
+        let cantPages = Math.ceil(list.length / 10);
+
+        console.log(cantPages)
+
+        let cant_in_page = 1
+        for (let i = 0; i < cantPages; i++) {
+          cant_in_page += (10*(i))
+          this.cantPages.push({index: i,pagination: i +1,class:'',count_pagination:cant_in_page});
+          this.listFiltered.push(list.slice(i*10,10*(i+1)))
+        }
+
+        this.list = this.listFiltered[0]
+
+      } else {
+        this.list = list;
+        this.listFiltered[0] = list;
       }
-      this.last_page = this.pages.length
-    }
-  },
-  computed: {
-    records_init_page() {
-      return ((this.page - 1) * this.per_page) + 1
+      this.cantPages[0] = {index: 0,pagination: 1,class:'active',count_pagination:1};
+
+      this.actualPage = this.cantPages[0]
+
+      this.$emit('paginate',{
+          "cantPages":this.cantPages,
+          "list":this.list,
+          "listFiltered":this.listFiltered,
+      })
     },
-    records_end_page() {
-      return ((this.page * this.per_page) > this.records) ? this.records : (this.page * this.per_page)
+    sendPaginate(item) {
+      for(let itemCant of this.cantPages){
+        itemCant.class=""
+      }
+
+      item.class='active'
+      this.list = this.listFiltered[item.index]
+      this.count = this.list.length
+      
+      this.$emit('paginate',{
+          "cantPages":this.cantPages,
+          "list":this.list,
+          "listFiltered":this.listFiltered,
+      })
+
+      this.actualPage = item
     },
-    pages_show() {
-      const first_index =  Math.max(this.page-3,0)
-      const last_index =  Math.min(this.page+2,this.last_page)
-      return this.pages.slice(first_index,last_index)
+    changePaginate(value){
+      let index = (this.actualPage.index)+value;
+      if(this.cantPages[index]){
+        this.sendPaginate(this.cantPages[index])
+      }
     },
   },
-  mount(){
-    this.setPages()
-  },
-  watch: {
-    records: function (value){
-      this.setPages();
-    }
+  mounted() {
+
   }
-}
+};
 </script>
 
 <style scoped>
-
 </style>
