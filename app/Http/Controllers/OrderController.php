@@ -14,21 +14,34 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::where('status', true)
+
+        $documentNumber = $request->input('document_number');
+        $fromDate = $request->input('desde', now()->toDateString());
+        $toDate = $request->input('hasta', now()->toDateString());
+
+        $ordersQuery = Order::where('status', true)
             ->with([
                 'client',
                 'user',
                 'order_details' => function ($query) {
                     $query->where('status', true);
                 }
-            ])
-            ->get();
+            ]);
+
+        if (!empty($documentNumber)) {
+            $ordersQuery->whereHas('client', function ($query) use ($documentNumber) {
+                $query->where('document_number', $documentNumber);
+            });
+        }
+
+        $ordersQuery->whereBetween('issue_date', [$fromDate, $toDate]);
+        $orders = $ordersQuery->get();
 
         return response()->json([
             'success' => true,
-            'msg' => 'Órdenes activas obtenidas correctamente.',
+            'msg' => 'Órdenes obtenidas correctamente.',
             'data' => $orders
         ]);
     }
@@ -47,10 +60,10 @@ class OrderController extends Controller
             'delivery_location' => 'required|string',
             'issue_date' => 'required|date',
             'user_id' => 'required|exists:users,id',
-            'order_details' => 'required|array|min:1',
-            'order_details.*.product_id' => 'required|exists:products,id',
-            'order_details.*.description' => 'nullable|string',
-            'order_details.*.quantity' => 'required|integer|min:1'
+            'details' => 'required|array|min:1',
+            'details.*.product_id' => 'required|exists:products,id',
+            'details.*.description' => 'nullable|string',
+            'details.*.quantity' => 'required|integer|min:1'
         ]);
 
         DB::beginTransaction();
@@ -60,13 +73,13 @@ class OrderController extends Controller
                 'client_id' => $validated['client_id'],
                 'delivery_date' => $validated['delivery_date'],
                 'delivery_location' => $validated['delivery_location'],
-                'order_status' => "En Proceso",
+                'order_status' => "Por Cotizar",
                 'issue_date' => $validated['issue_date'],
                 'user_id' => $validated['user_id'],
                 'status' => true
             ]);
 
-            foreach ($validated['order_details'] as $detail) {
+            foreach ($validated['details'] as $detail) {
                 $order->details()->create([
                     'product_id' => $detail['product_id'],
                     'description' => $detail['description'] ?? null,
@@ -105,7 +118,7 @@ class OrderController extends Controller
             ->with([
                 'client',
                 'user',
-                'order_details' => function ($query) {
+                'details' => function ($query) {
                     $query->where('status', true);
                 }
             ])
@@ -221,7 +234,7 @@ class OrderController extends Controller
             $order->status = false;
             $order->save();
 
-            foreach ($order->details as $detail) {
+            foreach ($order->order_details as $detail) {
                 $detail->status = false;
                 $detail->save();
             }

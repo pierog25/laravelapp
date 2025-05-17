@@ -16,7 +16,7 @@ class OrderTableSeeder extends Seeder
                 'client_id' => 1,
                 'delivery_date' => now()->addDays(10),
                 'delivery_location' => 'Taller Los Olivos',
-                'order_status' => 'En Proceso',
+                'order_status' => 'Por Cotizar',
                 'issue_date' => now(),
                 'user_id' => 1,
                 'created_at' => now(),

@@ -22,4 +22,9 @@ class OrderDetail extends Model
     {
         return $this->belongsTo(Product::class);
     }
+    
+    public function preSaleReport()
+    {
+        return $this->hasOne(PreSaleReport::class, 'order_detail_id');
+    }
 }
