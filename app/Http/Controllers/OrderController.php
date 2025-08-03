@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Order;
 use App\OrderDetail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NotificacionMailable;
+use Carbon\Carbon;
+use PDF;
+
 
 class OrderController extends Controller
 {
@@ -36,8 +41,12 @@ class OrderController extends Controller
             });
         }
 
-        $ordersQuery->whereBetween('issue_date', [$fromDate, $toDate]);
-        $orders = $ordersQuery->get();
+        if ($fromDate && $toDate) {
+            $ordersQuery->whereBetween('issue_date', [$fromDate, $toDate]);
+        }
+        $orders = $ordersQuery
+            ->orderBy('issue_date','desc')
+            ->get();
 
         return response()->json([
             'success' => true,
@@ -87,6 +96,21 @@ class OrderController extends Controller
                     'status' => true
                 ]);
             }
+
+            $order->load(['client', 'user', 'details']);
+
+            $email = $order->client->email;          // Email del cliente
+            $name = $order->client->first_name." ".$order->client->last_name;          // Nombre del cliente (ajusta el campo si es diferente)
+            $id = $order->id;                  // ID del pedido
+            $idFormated = str_pad($id, 8, '0', STR_PAD_LEFT);
+
+            Mail::to($email)->send(new NotificacionMailable(
+                $name,
+                "Por Cotizar",
+                $idFormated,
+                null,
+                null
+            ));
 
             DB::commit();
 
@@ -144,7 +168,6 @@ class OrderController extends Controller
             'client_id' => 'required|exists:clients,id',
             'delivery_date' => 'required|date',
             'delivery_location' => 'required|string',
-            'order_status' => 'required|in:En Proceso,Pedido,Cotizado,Preventa,Pagado,Por Cotizar',
             'issue_date' => 'required|date',
             'user_id' => 'required|exists:users,id',
             'status'  => 'boolean',
@@ -253,5 +276,103 @@ class OrderController extends Controller
                 'data' => []
             ], 500);
         }
+    }
+
+    public function getOrder(Request $request){
+        $code = $request->input('code');
+        // QUIERO VALIDAR QUE CODE SEA NUMERICO
+        if(!$code){
+            return response()->json([
+                'success' => false,
+                'msg' => 'No existe pedido con ese código.',
+                'data' => []
+            ], 400);
+        }
+        if (!is_numeric($code)) {
+            return response()->json([
+                'success' => false,
+                'msg' => 'No existe pedido con ese código.',
+                'data' => []
+            ], 400);
+        }
+
+        $ordersQuery = Order::where('status', true)
+            ->with([
+                'client',
+                'user',
+                'details' => function ($query) {
+                    $query->where('status', true)
+                        ->with(['preSaleReport' => function ($q) {
+                            $q->where('status', true)
+                                ->with(['details' => function ($d) {
+                                    $d->where('status', true)
+                                        ->with(['supplier']);
+                                }]);
+                        }]);
+                }
+//                'details' => function ($query) {
+//                    $query->where('status', true);
+//                }
+            ]);
+
+        if (!empty($code)) {
+            $ordersQuery->where('id', $code);
+        }
+        $orders = $ordersQuery->first();
+
+        return response()->json([
+            'success' =>!is_null($orders),
+            'msg' =>!is_null($orders)  ? 'Órdenes obtenidas correctamente.': "No existe pedido con ese código.",
+            'data' => $orders
+        ]);
+    }
+
+    public function pdf($id)
+    {
+        $order = Order::where('id', $id)
+            ->where('status', true)
+            ->with([
+                'client',
+                'user',
+                'details' => function ($query) {
+                    $query->where('status', true)
+                        ->with(['preSaleReport' => function ($q) {
+                            $q->where('status', true);
+                        }]);
+                }
+            ])
+            ->firstOrFail();
+
+        // Armar los ítems
+        $items = [];
+        $total = 0;
+
+        foreach ($order->details as $detail) {
+            $unitPrice = $detail->preSaleReport->unit_price ?? 0;
+            $subtotal = $detail->quantity * $unitPrice;
+            $items[] = [
+                'cantidad' => $detail->quantity,
+                'unidad' => 'UND',
+                'descripcion' => $detail->description,
+                'precio_unitario' => $unitPrice,
+                'precio_total' => $subtotal
+            ];
+            $total += $subtotal;
+        }
+
+        // Armar la data para la vista
+        $data = [
+            'numero' => str_pad($order->id, 5, '0', STR_PAD_LEFT) . '/' . date('Y', strtotime($order->issue_date ?? now())),
+            'cliente' => $order->client->first_name . ' ' . $order->client->last_name,
+            'fecha' => Carbon::parse($order->issue_date)->locale('es')->isoFormat('D [de] MMMM [de] YYYY'),
+            'atencion' => $order->client->first_name,
+            'total' => $total,
+            'items' => $items
+        ];
+
+        // Generar PDF
+        $pdf = PDF::loadView('pdf.cotizacion', ['cotizacion' => $data]);
+        return $pdf->stream('cotizacion.pdf');
+//        return $pdf->download('cotizacion.pdf');
     }
 }

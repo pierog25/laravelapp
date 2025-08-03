@@ -48,8 +48,8 @@ export default {
   data() {
     return {
       search: {
-        desde: Vue.moment().format('YYYY-MM-DD'),
-        hasta: Vue.moment().format('YYYY-MM-DD'),
+        desde: '',
+        hasta: '',
         document_number: ""
       },
       document: "",

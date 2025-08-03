@@ -43,13 +43,7 @@ var staticRenderFns = [function () {
     staticClass: "col-12"
   }, [_c("div", {
     staticClass: "copyright text-center text-muted"
-  }, [_vm._v("\r\n          © 2022 "), _c("a", {
-    staticClass: "font-weight-bold ml-1",
-    attrs: {
-      href: "https://overskull.com/",
-      target: "_blank"
-    }
-  }, [_vm._v("Overskull")])])])])]);
+  })])])]);
 }];
 render._withStripped = true;
 

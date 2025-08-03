@@ -8,6 +8,11 @@ import moduleRouter from '../modules/module_base/routes/index.js'
 import customersRouter from '../modules/customers/routes/index.js'
 import ordersRouter from '../modules/orders/routes/index.js'
 import quotedRouter from '../modules/quoted/routes/index.js'
+import productionRouter from '../modules/production/routes/index.js'
+import distributorsRouter from '../modules/distributors/routes/index.js'
+import feedbacksRouter from '../modules/feedbacks/routes/index.js'
+import usersRouter from '../modules/users/routes/index.js'
+import suppliersRouter from '../modules/suppliers/routes/index.js'
 
 Vue.use(Meta)
 Vue.use(Router)
@@ -37,6 +42,26 @@ const routes = [
             {
                 path: '/quoted',
                 ...quotedRouter
+            },
+            {
+                path: '/production',
+                ...productionRouter
+            },
+            {
+                path: '/distributors',
+                ...distributorsRouter
+            },
+            {
+                path: '/feedbacks',
+                ...feedbacksRouter
+            },
+            {
+                path: '/users',
+                ...usersRouter
+            },
+            {
+                path: '/suppliers',
+                ...suppliersRouter
             },
         ],
         props: true

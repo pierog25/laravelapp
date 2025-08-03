@@ -41,6 +41,19 @@
                       <a class="dropdown-item" href="#" @click.prevent="editItem(item)">
                         <i class="fas fa-edit"></i> Pre - Venta
                       </a>
+                      <a class="dropdown-item" href="#" @click.prevent="production(item)">
+                        <i class="fas fa-exchange-alt"></i> Producción
+                      </a>
+
+                      <a
+                          v-if="item.order_status === 'Cotizado'"
+                          class="dropdown-item"
+                          href="#"
+                          @click.prevent="openPDF(item.id)"
+                      >
+                        <i class="fas fa-file-pdf"></i> PDF
+                      </a>
+
                       <a class="dropdown-item" href="#" @click.prevent="deleteItem(item)">
                         <i class="fas fa-trash-alt"></i> Eliminar
                       </a>
@@ -76,10 +89,32 @@ export default {
     }
   },
   methods: {
+    openPDF(id) {
+      const url = `/api/pdf/${id}`;
+      window.open(url, '_blank');
+    },
     setPagination(data) {
       this.list = data.list
       this.cantPages = data.cantPages
       this.listFiltered = data.listFiltered
+    },
+    async production(item) {
+      try {
+        const response = await axios.post(`/api/production`, {
+          "id": item.id
+        })
+        if (response.status === 200) {
+          const resultData = response.data;
+          if (resultData.success) {
+            Alerts.showMessage("Guardado",resultData.msg,"success");
+            this.$emit('deleteItem', item)
+          }else{
+            Alerts.showMessage("Error",resultData.msg,"error");
+          }
+        }
+      } catch (e) {
+        Alerts.showErrorMessage();
+      }
     },
     editItem(item) {
       this.$router.push({ name: 'updatequoted', params: { status: 'EDIT', item: item } })

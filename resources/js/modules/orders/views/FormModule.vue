@@ -48,7 +48,8 @@
                       </multiselect>
                     </td>
                     <td>
-                      <input type="text" v-model="item.description" class="form-control" placeholder="Descripción">
+<!--                      <input type="text" v-model="item.description" class="form-control" placeholder="Descripción">-->
+                      <textarea class="form-control form-control-sm" placeholder="Descripción" v-model="item.description" ></textarea>
                     </td>
                     <td>
                       <input type="number" v-model.number="item.quantity" class="form-control" placeholder="Cantidad">

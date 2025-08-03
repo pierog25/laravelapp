@@ -13,16 +13,16 @@
                   <tr>
                     <td><strong>Cliente:</strong></td>
                     <td>
-                      {{ item.client.first_name + " " + item.client.last_name }}
+                      {{ item && item.client ? item.client.first_name + " " + item.client.last_name : '' }}
                     </td>
                   </tr>
                   <tr>
                     <td><strong>Correo:</strong></td>
-                    <td>{{ item.client.email }}</td>
+                    <td>{{ item && item.client ? item.client.email : '' }}</td>
                   </tr>
                   <tr>
                     <td><strong>Teléfono:</strong></td>
-                    <td>{{ item.client.phone }}</td>
+                    <td>{{item && item.client ?  item.client.phone : ''}}</td>
                   </tr>
                 </table>
               </div>
@@ -258,7 +258,7 @@ export default {
             Alerts.showUpdatedMessage()
             this.resetForm()
 
-            this.$router.push({ name: 'listorders' })
+            this.$router.push({ name: 'listquoted' })
           }
         }).catch((err) => {
           if (err.response.data.code == "Error") {
@@ -309,7 +309,7 @@ export default {
         this.text_button = 'Actualizar'
       } else {
         if (this.$route.name === 'updatequoted' && this.item === undefined) {
-          this.$router.push({ name: 'newquoted' })
+          this.$router.push({ name: 'listquoted' })
         }
       }
     },
@@ -353,11 +353,13 @@ export default {
     await this.getProducts();
     await this.getSuppliers();
     this.validateStatus();
-    this.items = this.item.details.map((itemDetail) => {
-      return itemDetail.pre_sale_report && itemDetail.pre_sale_report.details
-        ? [...itemDetail.pre_sale_report.details] // Clona los detalles existentes
-        : []; // O inicializa como un array vacío
-    });
+    if(this.item && this.item.details){
+      this.items = this.item.details.map((itemDetail) => {
+        return itemDetail.pre_sale_report && itemDetail.pre_sale_report.details
+            ? [...itemDetail.pre_sale_report.details] // Clona los detalles existentes
+            : []; // O inicializa como un array vacío
+      });
+    }
   },
   watch: {
     status: function (status) {
@@ -388,18 +390,22 @@ export default {
       };
     },
     totalCost() {
-      return this.item.details.reduce((acc, detail, index) => {
-        const unitPrice = this.unitPrice(index); // Usa la función de cálculo de precio unitario
-        return acc + parseFloat(unitPrice || 0);
-      }, 0).toFixed(2); // Devuelve con 2 decimales
+      if(this.item && this.item.details){
+        return this.item.details.reduce((acc, detail, index) => {
+          const unitPrice = this.unitPrice(index); // Usa la función de cálculo de precio unitario
+          return acc + parseFloat(unitPrice || 0);
+        }, 0).toFixed(2);
+      }// Devuelve con 2 decimales
     },
 
     // Calcula la suma de todos los precios finales
     finalPrice() {
-      return this.item.details.reduce((acc, detail, index) => {
-        const price = this.totalPrice(index); // Usa la función de cálculo de precio
-        return acc + parseFloat(price || 0);
-      }, 0).toFixed(2); // Devuelve con 2 decimales
+      if(this.item && this.item.details){
+        return this.item.details.reduce((acc, detail, index) => {
+          const price = this.totalPrice(index); // Usa la función de cálculo de precio
+          return acc + parseFloat(price || 0);
+        }, 0).toFixed(2); // Devuelve con 2 decimales
+      }
     }
   }
 }

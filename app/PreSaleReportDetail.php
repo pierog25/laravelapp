@@ -11,7 +11,13 @@ class PreSaleReportDetail extends Model
         'resource',
         'supplier_id',
         'cost',
-        'status'
+        'status',
+        'cost_final',
+        'cost_additional',
+        'date_delivery',
+        'date_receipt',
+        'comments_cost',
+        'comment_quality'
     ];
 
     protected $hidden = [

@@ -12,9 +12,25 @@ class SupplierController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Supplier::all();
+        $query = Supplier::query();
+
+        if ($request->has('ruc')) {
+            $ruc = $request->ruc;
+            $query->whereRaw("ruc LIKE ?", ["%{$ruc}%"]);
+        }
+
+        if ($request->has('name')) {
+            $name = $request->name;
+            $query->whereRaw("name LIKE ?", ["%{$name}%"]);
+        }
+
+        $query->where('status', 1);
+
+        $suppliers = $query->get();
+
+        return response()->json($suppliers);
     }
 
     /**
@@ -33,8 +49,7 @@ class SupplierController extends Controller
             'first_phone' => 'nullable|string|max:15',
             'second_phone' => 'nullable|string|max:15',
             'third_phone' => 'nullable|string|max:15',
-            'type' => 'in:Materiales,Servicios',
-            'status' => 'boolean',
+            'type' => 'in:Materiales,Servicios'
         ]);
 
         $supplier = Supplier::create($validated);
@@ -70,8 +85,7 @@ class SupplierController extends Controller
             'first_phone' => 'nullable|string|max:15',
             'second_phone' => 'nullable|string|max:15',
             'third_phone' => 'nullable|string|max:15',
-            'type' => 'sometimes|required|in:Materials,Services',
-            'status' => 'boolean',
+            'type' => 'sometimes|required|in:Materiales,Servicios'
         ]);
         
         $supplier = Supplier::findOrFail($id);

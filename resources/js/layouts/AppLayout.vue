@@ -32,7 +32,7 @@ export default {
     async connectionIO(){
 
       const user_id = this.userLogged.id;
-      const socket_url = 'http://143.198.239.58:9500/';
+      const socket_url = 'xxxxxx';
       const socket = await io.connect(socket_url, {'query':{'user_id':user_id,'origin':this.appName}});//'forceNew': true,
 
       socket.on('user_connected',function (data) {

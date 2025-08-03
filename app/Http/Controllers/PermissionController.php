@@ -12,16 +12,30 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-//        $permission = auth()->user()->roles()->with('permissions')->get()
-//            ->pluck('permissions')
-//            ->flatten()
-//            ->pluck('name')
-//            ->toArray();
-//        return response()->json($permission);
-        $permission = Permission::get();
-        return response()->json($permission);
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Usuario no autenticado.'
+            ], 401);
+        }
+
+        // Obtener IDs de roles del usuario
+        $roleIds = $user->roles->pluck('id');
+
+        // Buscar permisos relacionados con los roles del usuario
+        $permissions = Permission::whereHas('roles', function ($query) use ($roleIds) {
+            $query->whereIn('role.id', $roleIds); // Aquí usamos el nombre correcto de la tabla: role
+        })->pluck('name');
+
+        return response()->json([
+            'success' => true,
+            'data' => $permissions
+        ]);
+
     }
 
     /**

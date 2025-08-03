@@ -17,7 +17,7 @@
           <div class="collapse navbar-collapse" id="sidenav-collapse-main">
 
             <ul class="navbar-nav">
-              <ListItem v-for="(item, index) in menuList" @closePanel="dismissMenu" :title="item.titulo" :icon="item.icon" :options="item.options" :key="index+'items'"/>
+              <ListItem v-for="(item, index) in menu" @closePanel="dismissMenu" :title="item.titulo" :icon="item.icon" :options="item.options" :key="index+'items'"/>
             </ul>
 
           </div>
@@ -51,7 +51,8 @@ export default {
   },
   data() {
     return {
-      menuList
+      menuList,
+      menu:[]
     }
   },
   props:{
@@ -66,9 +67,41 @@ export default {
       $('#sidenav-main').addClass('active');
       // hide overlay
       $('.overlay').removeClass('active');
+    },
+    filtrarMenuPorPermisos(menuList, permisosUsuario) {
+      return menuList
+          .map(menu => {
+            // Filtrar subopciones según permisos
+            const opcionesFiltradas = menu.options.filter(opcion =>
+                permisosUsuario.includes(opcion.gate)
+            );
+
+            // Mostrar solo los menús con al menos una opción visible
+            if (opcionesFiltradas.length > 0) {
+              return {
+                ...menu,
+                options: opcionesFiltradas
+              };
+            }
+
+            return null; // No mostrar este grupo de menú
+          })
+          .filter(menu => menu !== null);
+    },
+    async getPermissions() {
+      //consumir esta api con axios /api/permission
+      try {
+        const response = await axios.get('/permission');
+        const permisos = response.data.data; // debe ser un array de strings
+        this.menu = this.filtrarMenuPorPermisos(menuList, permisos);
+        console.log(this.menu, "menu")
+      } catch (error) {
+        console.error('Error fetching permissions:', error);
+      }
     }
   },
-  mounted() {
+  async mounted() {
+    await this.getPermissions();
     $('#dismiss, .overlay').on('click', function () {
       // hide sidebar
       $('#sidenav-main').addClass('active');

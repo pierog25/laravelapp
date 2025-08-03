@@ -25,6 +25,7 @@ class ClientController extends Controller
             $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%{$name}%"]);
         }
 
+        $query->where('status', 1);
         $clients = $query->get();
 
         return response()->json($clients);

@@ -20,6 +20,9 @@ Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index')->name('home');
+//Route::get('/', function(){
+//    return "Hola";
+//});
 
 /** ABILITIES */
 Route::resource('abilities','PermissionController');
@@ -31,3 +34,11 @@ Route::get('download-file/{folder}/{filename}','FileController@downloadFile');
 
 /** EXCEL */
 Route::resource('excel','ExcelController');
+Route::apiResource('permission', 'PermissionController');
+Route::get('send-email', 'EmailController@send');
+Route::get('/seguimiento', function () {
+    return view('seguimiento');
+});
+Route::get('/formulario/{id}', function () {
+    return view('formulario_experiencia');
+});

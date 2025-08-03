@@ -48,9 +48,10 @@ export default {
   data() {
     return {
       search: {
-        desde: Vue.moment().format('YYYY-MM-DD'),
-        hasta: Vue.moment().format('YYYY-MM-DD'),
-        document_number: ""
+        desde: "",
+        hasta: "",
+        document_number: "",
+        status:['Por Cotizar', 'Cotizado']
       },
       document: "",
     }

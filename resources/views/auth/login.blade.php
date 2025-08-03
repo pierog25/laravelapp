@@ -8,7 +8,7 @@
                 <div class="header-body text-center mb-7">
                     <div class="row justify-content-center">
                         <div class="col-xl-5 col-lg-6 col-md-8 px-5">
-                            <h1 class="text-white">{{ config('app.name', 'Laravel') }}</h1>
+                            <h1 class="text-white">{{ config('app.name', 'JBC Textil') }}</h1>
                             <p class="text-lead text-white">Bienvenido!</p>
                         </div>
                     </div>
@@ -95,7 +95,6 @@
         <div class="row align-items-center justify-content-lg-between">
             <div class="col-12">
                 <div class="copyright text-center text-muted">
-                    © {{ date("Y") }} <a href="https://overskull.com/" class="font-weight-bold ml-1" target="_blank">Overskull</a>
                 </div>
             </div>
         </div>

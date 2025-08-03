@@ -103,7 +103,6 @@
         <div class="row align-items-center justify-content-lg-between">
             <div class="col-12">
                 <div class="copyright text-center text-muted">
-                    © {{ date("Y") }} <a href="https://overskull.com/" class="font-weight-bold ml-1" target="_blank">Overskull</a>
                 </div>
             </div>
         </div>
