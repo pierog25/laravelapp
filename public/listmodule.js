@@ -1967,12 +1967,13 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       search: {
-        desde: "",
-        hasta: "",
-        document_number: "",
-        status: ['Por Cotizar', 'Cotizado']
+        desde: '',
+        hasta: '',
+        document_number: '',
+        status: []
       },
-      document: ""
+      statusOptions: ['Por Cotizar', 'Cotizado'],
+      document: ''
     };
   },
   props: {
@@ -4669,7 +4670,7 @@ var render = function render() {
         }, [_c("div", {
           staticClass: "form-row"
         }, [_c("div", {
-          staticClass: "col-md-3 mb-2"
+          staticClass: "col-md-2 mb-2"
         }, [_c("label", {
           staticClass: "form-control-label",
           attrs: {
@@ -4726,6 +4727,31 @@ var render = function render() {
           }
         })], 1)]), _vm._v(" "), _c("div", {
           staticClass: "col-md-3 mb-2"
+        }, [_c("div", {
+          staticClass: "form-group"
+        }, [_c("label", {
+          staticClass: "form-control-label"
+        }, [_vm._v("Estado")]), _vm._v(" "), _c("multiselect", {
+          attrs: {
+            options: _vm.statusOptions,
+            multiple: true,
+            "close-on-select": false,
+            "clear-on-select": false,
+            "preserve-search": true,
+            placeholder: "Estado",
+            "select-label": "Seleccionar",
+            "deselect-label": "Quitar",
+            "selected-label": "Seleccionado"
+          },
+          model: {
+            value: _vm.search.status,
+            callback: function callback($$v) {
+              _vm.$set(_vm.search, "status", $$v);
+            },
+            expression: "search.status"
+          }
+        })], 1)]), _vm._v(" "), _c("div", {
+          staticClass: "col-md-1 mb-2"
         }, [_c("div", {
           staticClass: "form-group"
         }, [_c("label", {

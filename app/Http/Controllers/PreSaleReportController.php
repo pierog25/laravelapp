@@ -12,6 +12,10 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NotificacionMailable;
+use App\Reports\ReportContext;
+use App\Reports\DateRangeReport;
+use App\Reports\ClientReport;
+use App\Reports\StatusReport;
 
 
 class PreSaleReportController extends Controller
@@ -23,45 +27,25 @@ class PreSaleReportController extends Controller
      */
     public function index(Request $request)
     {
-
         $documentNumber = $request->input('document_number');
-        $fromDate = $request->input('desde', now()->toDateString());
-        $toDate = $request->input('hasta', now()->toDateString());
+        $status         = $request->input('status');
 
-        $ordersQuery = Order::where('status', true)
-            ->with([
-                'client',
-                'user',
-                'details' => function ($query) {
-                    $query->where('status', true)
-                        ->with(['preSaleReport' => function ($q) {
-                            $q->where('status', true)
-                                ->with(['details' => function ($d) {
-                                    $d->where('status', true)
-                                    ->with(['supplier']);
-                                }]);
-                        }]);
-                }
-            ]);
-
+        // Elegimos la estrategia según lo que envía el cliente
         if (!empty($documentNumber)) {
-            $ordersQuery->whereHas('client', function ($query) use ($documentNumber) {
-                $query->where('document_number', $documentNumber);
-            });
+            $strategy = new ClientReport();
+        } elseif (!empty($status)) {
+            $strategy = new StatusReport();
+        } else {
+            $strategy = new DateRangeReport();
         }
-        $status = $request->status;
-        $ordersQuery->whereIn('order_status', $status);
-        if($fromDate && $toDate){
-            $ordersQuery->whereBetween('issue_date', [$fromDate, $toDate]);
-        }
-        $orders = $ordersQuery
-            ->orderBy('issue_date','desc')
-            ->get();
+
+        $context = new ReportContext($strategy);
+        $orders  = $context->generate($request);
 
         return response()->json([
             'success' => true,
-            'msg' => 'Órdenes obtenidas correctamente.',
-            'data' => $orders
+            'msg'     => 'Órdenes obtenidas correctamente.',
+            'data'    => $orders
         ]);
     }
 

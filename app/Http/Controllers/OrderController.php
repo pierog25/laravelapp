@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Order;
 use App\OrderDetail;
+use App\Factories\OrderFactory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NotificacionMailable;
@@ -78,47 +79,34 @@ class OrderController extends Controller
         DB::beginTransaction();
 
         try {
-            $order = Order::create([
-                'client_id' => $validated['client_id'],
-                'delivery_date' => $validated['delivery_date'],
-                'delivery_location' => $validated['delivery_location'],
-                'order_status' => "Por Cotizar",
-                'issue_date' => $validated['issue_date'],
-                'user_id' => $validated['user_id'],
-                'status' => true
-            ]);
+            // FACTORY METHOD
+            $order = OrderFactory::createFromArray($validated);
 
-            foreach ($validated['order_details'] as $detail) {
-                $order->details()->create([
-                    'product_id' => $detail['product_id'],
-                    'description' => $detail['description'] ?? null,
-                    'quantity' => $detail['quantity'],
-                    'status' => true
-                ]);
-            }
-
+            // Cargamos relaciones
             $order->load(['client', 'user', 'details']);
 
-            $email = $order->client->email;          // Email del cliente
-            $name = $order->client->first_name." ".$order->client->last_name;          // Nombre del cliente (ajusta el campo si es diferente)
-            $id = $order->id;                  // ID del pedido
+            // Email
+            $email = $order->client->email;
+            $name = $order->client->first_name . " " . $order->client->last_name;
+            $id = $order->id;
             $idFormated = str_pad($id, 8, '0', STR_PAD_LEFT);
 
-            Mail::to($email)->send(new NotificacionMailable(
-                $name,
-                "Por Cotizar",
-                $idFormated,
-                null,
-                null
-            ));
+            // Mail::to($email)->send(new NotificacionMailable(
+            //     $name,
+            //     "Por Cotizar",
+            //     $idFormated,
+            //     null,
+            //     null
+            // ));
 
             DB::commit();
 
             return response()->json([
                 'success' => true,
                 'msg' => 'Orden creada correctamente.',
-                'data' => $order->load(['client', 'user', 'details'])
+                'data' => $order
             ], 201);
+
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([

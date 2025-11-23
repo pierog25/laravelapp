@@ -4,7 +4,7 @@
       <validation-observer v-slot="{ handleSubmit }">
         <form class="needs-validation" @submit.prevent="handleSubmit(checkForm)">
           <div class="form-row">
-            <div class="col-md-3 mb-2">
+            <div class="col-md-2 mb-2">
               <label class="form-control-label" for="documento">N° Documento</label>
               <input type="text" v-model="search.document_number" class="form-control" id="documento" placeholder="Documento">
             </div>
@@ -20,7 +20,27 @@
                 <datepicker :value="search.hasta" @input="getDateEnd"></datepicker>
               </div>
             </div>
+
+            <!-- Multiselect de estados -->
             <div class="col-md-3 mb-2">
+              <div class="form-group">
+                <label class="form-control-label">Estado</label>
+                <multiselect
+                  v-model="search.status"
+                  :options="statusOptions"
+                  :multiple="true"
+                  :close-on-select="false"
+                  :clear-on-select="false"
+                  :preserve-search="true"
+                  placeholder="Estado"
+                  select-label="Seleccionar"
+                  deselect-label="Quitar"
+                  selected-label="Seleccionado"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-1 mb-2">
               <div class="form-group">
                 <label class="form-control-label text-white d-block">Buscar</label>
                 <button class="btn btn-default" type="submit" :disabled="is_search">
@@ -48,12 +68,13 @@ export default {
   data() {
     return {
       search: {
-        desde: "",
-        hasta: "",
-        document_number: "",
-        status:['Por Cotizar', 'Cotizado']
+        desde: '',
+        hasta: '',
+        document_number: '',
+        status: []
       },
-      document: "",
+      statusOptions: ['Por Cotizar', 'Cotizado'],
+      document: ''
     }
   },
   props: {
