@@ -647,7 +647,7 @@ var render = function render() {
     staticClass: "media-body ml-2"
   }, [_c("span", {
     staticClass: "mb-0 text-sm font-weight-bold"
-  }, [_vm._v("\n            " + _vm._s(_vm.user_name) + " "), _c("i", {
+  }, [_vm._v("\r\n            " + _vm._s(_vm.user_name) + " "), _c("i", {
     staticClass: "fas fa-caret-down"
   })])])])]), _vm._v(" "), _c("a", {
     staticClass: "nav-link nav-link-icon",
@@ -835,7 +835,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.over[data-v-325b58e2] {\n  color: #737d90 !important;\n}\n\n", ""]);
+exports.push([module.i, "\n.over[data-v-325b58e2] {\r\n  color: #737d90 !important;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -854,7 +854,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n#sidenav-main[data-v-c32b2eb4] {\n  max-width: 250px;\n}\n#sidenav-main.active[data-v-c32b2eb4] {\n  margin-left: -250px;\n}\n@media (max-width: 1199.98px){\n.sidenav[data-v-c32b2eb4] {\n    transform: translateX(0px) !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n#sidenav-main[data-v-c32b2eb4] {\r\n  max-width: 250px;\n}\n#sidenav-main.active[data-v-c32b2eb4] {\r\n  margin-left: -250px;\n}\n@media (max-width: 1199.98px){\n.sidenav[data-v-c32b2eb4] {\r\n    transform: translateX(0px) !important;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -873,7 +873,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.overlay[data-v-2cfb4112] {\n  top: 0;\n  display: none;\n  position: fixed;\n  /* full screen */\n  width: 100vw;\n  height: 100vh;\n  /* transparent black */\n  background: rgba(0, 0, 0, 0.7);\n  /* middle layer, i.e. appears below the sidebar */\n  z-index: 998;\n  opacity: 0;\n  /* animate the transition */\n  transition: all 0.5s ease-in-out;\n}\n\n/* display .overlay when it has the .active class */\n.overlay.active[data-v-2cfb4112] {\n  display: block;\n  opacity: 1;\n}\n", ""]);
+exports.push([module.i, "\n.overlay[data-v-2cfb4112] {\r\n  top: 0;\r\n  display: none;\r\n  position: fixed;\r\n  /* full screen */\r\n  width: 100vw;\r\n  height: 100vh;\r\n  /* transparent black */\r\n  background: rgba(0, 0, 0, 0.7);\r\n  /* middle layer, i.e. appears below the sidebar */\r\n  z-index: 998;\r\n  opacity: 0;\r\n  /* animate the transition */\r\n  transition: all 0.5s ease-in-out;\n}\r\n\r\n/* display .overlay when it has the .active class */\n.overlay.active[data-v-2cfb4112] {\r\n  display: block;\r\n  opacity: 1;\n}\r\n", ""]);
 
 // exports
 

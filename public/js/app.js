@@ -79413,7 +79413,7 @@ var showConfirmDeleteMessage = function showConfirmDeleteMessage() {
 
   /*.then((result) => {
       if (result.value) {
-       }
+        }
   });*/
 };
 var showConfirmAnularMessage = function showConfirmAnularMessage() {
@@ -79463,7 +79463,7 @@ var showConfirmMessage = function showConfirmMessage(title, html, type) {
 
   /*.then((result) => {
       if (result.value) {
-       }
+        }
   });*/
 };
 var showToastMessage = function showToastMessage(title, position) {
@@ -79551,7 +79551,7 @@ var confirmDeleteReservation = function confirmDeleteReservation() {
 
   /*.then((result) => {
       if (result.value) {
-       }
+        }
   });*/
 };
 var confirmDeleteDeparture = function confirmDeleteDeparture() {
@@ -79570,7 +79570,7 @@ var confirmDeleteDeparture = function confirmDeleteDeparture() {
 
   /*.then((result) => {
       if (result.value) {
-       }
+        }
   });*/
 };
 var showSuccessDeleteTicket = function showSuccessDeleteTicket() {
@@ -79607,7 +79607,7 @@ var confirmGetOuthDeparturePage = function confirmGetOuthDeparturePage() {
 
   /*.then((result) => {
       if (result.value) {
-       }
+        }
   });*/
 };
 /*added 21/05/2020 by Fabrizio*/
@@ -79906,7 +79906,7 @@ var FileManager = /*#__PURE__*/function () {
     value:
     /*
     async sendFile(fileSend){
-             const file = fileSend.file;
+              const file = fileSend.file;
             const body = new FormData();
             body.append('files',file);
             try{
@@ -80649,8 +80649,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/html/jbc/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /var/www/html/jbc/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\laravelapp\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\laravelapp\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
