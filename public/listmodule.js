@@ -3018,7 +3018,7 @@ var render = function render() {
       role: "status",
       "aria-live": "polite"
     }
-  }, [_vm._v("\n            Mostrando " + _vm._s(_vm.actualPage.count_pagination) + " a " + _vm._s(_vm.list.length) + " de " + _vm._s(_vm.listAll.length) + " resultados\n          ")])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\r\n            Mostrando " + _vm._s(_vm.actualPage.count_pagination) + " a " + _vm._s(_vm.list.length) + " de " + _vm._s(_vm.listAll.length) + " resultados\r\n          ")])]), _vm._v(" "), _c("div", {
     staticClass: "col-sm-12 col-md-7"
   }, [_c("div", {
     staticClass: "dataTables_paginate paging_simple_numbers",
@@ -3288,7 +3288,7 @@ var render = function render() {
       attrs: {
         role: "row"
       }
-    }, [_c("td", [_vm._v(_vm._s(item.first_name + " " + item.last_name))]), _vm._v(" "), _c("td", [_c("strong", [_vm._v("Tipo Doc: ")]), _vm._v(_vm._s(item.document_type.name)), _c("br"), _vm._v(" "), _c("strong", [_vm._v("Documento: ")]), _vm._v(_vm._s(item.document_number) + "\n              ")]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.email))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.address))]), _vm._v(" "), _c("td", {
+    }, [_c("td", [_vm._v(_vm._s(item.first_name + " " + item.last_name))]), _vm._v(" "), _c("td", [_c("strong", [_vm._v("Tipo Doc: ")]), _vm._v(_vm._s(item.document_type.name)), _c("br"), _vm._v(" "), _c("strong", [_vm._v("Documento: ")]), _vm._v(_vm._s(item.document_number) + "\r\n              ")]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.email))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.address))]), _vm._v(" "), _c("td", {
       staticClass: "text-right"
     }, [_c("div", {
       staticClass: "dropdown"
@@ -3307,7 +3307,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-edit"
-    }), _vm._v(" Editar\n                    ")]), _vm._v(" "), _c("a", {
+    }), _vm._v(" Editar\r\n                    ")]), _vm._v(" "), _c("a", {
       staticClass: "dropdown-item",
       attrs: {
         href: "#"
@@ -3320,7 +3320,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-trash-alt"
-    }), _vm._v(" Eliminar\n                    ")])])])])]);
+    }), _vm._v(" Eliminar\r\n                    ")])])])])]);
   }), 0)])])]), _vm._v(" "), _c("pagination", {
     ref: "pagination",
     attrs: {
@@ -3352,7 +3352,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Name: activate to sort column ascending"
     }
-  }, [_vm._v("Nombres\n              ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Nombres\r\n              ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -3362,7 +3362,7 @@ var staticRenderFns = [function () {
       colspan: "2",
       "aria-label": "Email: activate to sort column ascending"
     }
-  }, [_vm._v("Documento\n              ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Documento\r\n              ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -3372,7 +3372,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Email: activate to sort column ascending"
     }
-  }, [_vm._v("Correo\n              ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Correo\r\n              ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -3382,7 +3382,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Email: activate to sort column ascending"
     }
-  }, [_vm._v("Dirección\n              ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Dirección\r\n              ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -3494,7 +3494,7 @@ var render = function render() {
     staticClass: "card"
   }, [_c("div", {
     staticClass: "card-header text-center font-weight-bold"
-  }, [_vm._v("\n          Puntajes seleccionados\n        ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\r\n          Puntajes seleccionados\r\n        ")]), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, _vm._l(_vm.scoreTypes, function (type, i) {
     return _c("button", {
@@ -3508,7 +3508,7 @@ var render = function render() {
           return _vm.selectScoreType(type.value);
         }
       }
-    }, [_vm._v("\n            " + _vm._s(type.label) + "\n          ")]);
+    }, [_vm._v("\r\n            " + _vm._s(type.label) + "\r\n          ")]);
   }), 0)])]), _vm._v(" "), _c("div", {
     staticClass: "col-7 d-flex align-items-center justify-content-center"
   }, [_c("bar-chart", {
@@ -3523,7 +3523,7 @@ var render = function render() {
     staticClass: "card"
   }, [_c("div", {
     staticClass: "card-header text-center font-weight-bold"
-  }, [_vm._v("\n          Distribuidores seleccionados\n        ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\r\n          Distribuidores seleccionados\r\n        ")]), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, _vm._l(_vm.distributors, function (dist) {
     return _c("button", {
@@ -3537,7 +3537,7 @@ var render = function render() {
           return _vm.selectDistributor(dist);
         }
       }
-    }, [_vm._v("\n            " + _vm._s(dist.name) + "\n          ")]);
+    }, [_vm._v("\r\n            " + _vm._s(dist.name) + "\r\n          ")]);
   }), 0)])])]);
 };
 
@@ -3575,7 +3575,7 @@ var render = function render() {
     staticClass: "card"
   }, [_c("div", {
     staticClass: "card-header text-center font-weight-bold"
-  }, [_vm._v("\n          Puntajes seleccionados\n        ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\r\n          Puntajes seleccionados\r\n        ")]), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, _vm._l(_vm.scoreTypes, function (type, i) {
     return _c("button", {
@@ -3589,7 +3589,7 @@ var render = function render() {
           return _vm.selectScoreType(type.value);
         }
       }
-    }, [_vm._v("\n            " + _vm._s(type.label) + "\n          ")]);
+    }, [_vm._v("\r\n            " + _vm._s(type.label) + "\r\n          ")]);
   }), 0)])]), _vm._v(" "), _c("div", {
     staticClass: "col-7 d-flex align-items-center justify-content-center"
   }, [_c("bar-chart", {
@@ -3604,7 +3604,7 @@ var render = function render() {
     staticClass: "card"
   }, [_c("div", {
     staticClass: "card-header text-center font-weight-bold"
-  }, [_vm._v("\n          Distribuidores seleccionados\n        ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\r\n          Distribuidores seleccionados\r\n        ")]), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, _vm._l(_vm.distributors, function (dist) {
     return _c("button", {
@@ -3618,7 +3618,7 @@ var render = function render() {
           return _vm.selectDistributor(dist);
         }
       }
-    }, [_vm._v("\n            " + _vm._s(dist.name) + "\n          ")]);
+    }, [_vm._v("\r\n            " + _vm._s(dist.name) + "\r\n          ")]);
   }), 0)])])]);
 };
 
@@ -3805,7 +3805,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-edit"
-    }), _vm._v(" Editar\n                    ")]), _vm._v(" "), _c("a", {
+    }), _vm._v(" Editar\r\n                    ")]), _vm._v(" "), _c("a", {
       staticClass: "dropdown-item",
       attrs: {
         href: "#"
@@ -3818,7 +3818,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-trash-alt"
-    }), _vm._v(" Eliminar\n                    ")])])])])]);
+    }), _vm._v(" Eliminar\r\n                    ")])])])])]);
   }), 0)])])]), _vm._v(" "), _c("pagination", {
     ref: "pagination",
     attrs: {
@@ -3850,7 +3850,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Name: activate to sort column ascending"
     }
-  }, [_vm._v("Columna 1\n              ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Columna 1\r\n              ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -3860,7 +3860,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Name: activate to sort column ascending"
     }
-  }, [_vm._v("Columna 2\n              ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Columna 2\r\n              ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -3870,7 +3870,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Email: activate to sort column ascending"
     }
-  }, [_vm._v("Columna 3\n              ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Columna 3\r\n              ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -4135,7 +4135,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-edit"
-    }), _vm._v(" Editar\n                      ")]), _vm._v(" "), _c("a", {
+    }), _vm._v(" Editar\r\n                      ")]), _vm._v(" "), _c("a", {
       staticClass: "dropdown-item",
       attrs: {
         href: "#"
@@ -4148,7 +4148,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-trash-alt"
-    }), _vm._v(" Eliminar\n                      ")])])])])]);
+    }), _vm._v(" Eliminar\r\n                      ")])])])])]);
   }), 0)])])]), _vm._v(" "), _c("pagination", {
     ref: "pagination",
     attrs: {
@@ -4180,7 +4180,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Name: activate to sort column ascending"
     }
-  }, [_vm._v("ID\n                ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("ID\r\n                ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -4190,7 +4190,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Name: activate to sort column ascending"
     }
-  }, [_vm._v("Cliente\n                ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Cliente\r\n                ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -4200,7 +4200,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Email: activate to sort column ascending"
     }
-  }, [_vm._v("Fecha de Entrega\n                ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Fecha de Entrega\r\n                ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -4210,7 +4210,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Email: activate to sort column ascending"
     }
-  }, [_vm._v("Estado\n                ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Estado\r\n                ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -4475,7 +4475,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-edit"
-    }), _vm._v(" Producción\n                      ")]), _vm._v(" "), _c("a", {
+    }), _vm._v(" Producción\r\n                      ")]), _vm._v(" "), _c("a", {
       staticClass: "dropdown-item",
       attrs: {
         href: "#"
@@ -4488,7 +4488,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-trash-alt"
-    }), _vm._v(" Eliminar\n                      ")])])])])]);
+    }), _vm._v(" Eliminar\r\n                      ")])])])])]);
   }), 0)])])]), _vm._v(" "), _c("pagination", {
     ref: "pagination",
     attrs: {
@@ -4520,7 +4520,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Name: activate to sort column ascending"
     }
-  }, [_vm._v("ID\n                ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("ID\r\n                ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -4530,7 +4530,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Name: activate to sort column ascending"
     }
-  }, [_vm._v("Cliente\n                ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Cliente\r\n                ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -4540,7 +4540,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Email: activate to sort column ascending"
     }
-  }, [_vm._v("Fecha de Entrega\n                ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Fecha de Entrega\r\n                ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -4550,7 +4550,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Email: activate to sort column ascending"
     }
-  }, [_vm._v("Estado\n                ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Estado\r\n                ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -4815,7 +4815,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-edit"
-    }), _vm._v(" Pre - Venta\n                      ")]), _vm._v(" "), _c("a", {
+    }), _vm._v(" Pre - Venta\r\n                      ")]), _vm._v(" "), _c("a", {
       staticClass: "dropdown-item",
       attrs: {
         href: "#"
@@ -4828,7 +4828,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-exchange-alt"
-    }), _vm._v(" Producción\n                      ")]), _vm._v(" "), item.order_status === "Cotizado" ? _c("a", {
+    }), _vm._v(" Producción\r\n                      ")]), _vm._v(" "), item.order_status === "Cotizado" ? _c("a", {
       staticClass: "dropdown-item",
       attrs: {
         href: "#"
@@ -4841,7 +4841,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-file-pdf"
-    }), _vm._v(" PDF\n                      ")]) : _vm._e(), _vm._v(" "), _c("a", {
+    }), _vm._v(" PDF\r\n                      ")]) : _vm._e(), _vm._v(" "), _c("a", {
       staticClass: "dropdown-item",
       attrs: {
         href: "#"
@@ -4854,7 +4854,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-trash-alt"
-    }), _vm._v(" Eliminar\n                      ")])])])])]);
+    }), _vm._v(" Eliminar\r\n                      ")])])])])]);
   }), 0)])])]), _vm._v(" "), _c("pagination", {
     ref: "pagination",
     attrs: {
@@ -4886,7 +4886,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Name: activate to sort column ascending"
     }
-  }, [_vm._v("ID\n                ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("ID\r\n                ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -4896,7 +4896,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Name: activate to sort column ascending"
     }
-  }, [_vm._v("Cliente\n                ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Cliente\r\n                ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -4906,7 +4906,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Email: activate to sort column ascending"
     }
-  }, [_vm._v("Fecha de Entrega\n                ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Fecha de Entrega\r\n                ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -4916,7 +4916,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Email: activate to sort column ascending"
     }
-  }, [_vm._v("Estado\n                ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Estado\r\n                ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -5181,7 +5181,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-edit"
-    }), _vm._v(" Editar\n                    ")]), _vm._v(" "), _c("a", {
+    }), _vm._v(" Editar\r\n                    ")]), _vm._v(" "), _c("a", {
       staticClass: "dropdown-item",
       attrs: {
         href: "#"
@@ -5194,7 +5194,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-trash-alt"
-    }), _vm._v(" Eliminar\n                    ")])])])])]);
+    }), _vm._v(" Eliminar\r\n                    ")])])])])]);
   }), 0)])])]), _vm._v(" "), _c("pagination", {
     ref: "pagination",
     attrs: {
@@ -5226,7 +5226,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Name: activate to sort column ascending"
     }
-  }, [_vm._v("ID\n              ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("ID\r\n              ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -5236,7 +5236,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Email: activate to sort column ascending"
     }
-  }, [_vm._v("Nombre\n              ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Nombre\r\n              ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -5246,7 +5246,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": ": activate to sort column ascending"
     }
-  }, [_vm._v("Correo\n              ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Correo\r\n              ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -5256,7 +5256,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Email: activate to sort column ascending"
     }
-  }, [_vm._v("RUC\n              ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("RUC\r\n              ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -5266,7 +5266,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Email: activate to sort column ascending"
     }
-  }, [_vm._v("Telefono\n              ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Telefono\r\n              ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -5276,7 +5276,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": ": activate to sort column ascending"
     }
-  }, [_vm._v("Tipo\n              ")])])]);
+  }, [_vm._v("Tipo\r\n              ")])])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -5531,7 +5531,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-edit"
-    }), _vm._v(" Editar\n                    ")]), _vm._v(" "), _c("a", {
+    }), _vm._v(" Editar\r\n                    ")]), _vm._v(" "), _c("a", {
       staticClass: "dropdown-item",
       attrs: {
         href: "#"
@@ -5544,7 +5544,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fas fa-trash-alt"
-    }), _vm._v(" Eliminar\n                    ")])])])])]);
+    }), _vm._v(" Eliminar\r\n                    ")])])])])]);
   }), 0)])])]), _vm._v(" "), _c("pagination", {
     ref: "pagination",
     attrs: {
@@ -5576,7 +5576,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Name: activate to sort column ascending"
     }
-  }, [_vm._v("ID\n              ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("ID\r\n              ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -5586,7 +5586,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Email: activate to sort column ascending"
     }
-  }, [_vm._v("Nombre\n              ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Nombre\r\n              ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -5596,7 +5596,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Email: activate to sort column ascending"
     }
-  }, [_vm._v("Correo\n              ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Correo\r\n              ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -5606,7 +5606,7 @@ var staticRenderFns = [function () {
       colspan: "1",
       "aria-label": "Email: activate to sort column ascending"
     }
-  }, [_vm._v("Rol\n              ")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Rol\r\n              ")]), _vm._v(" "), _c("th", {
     staticClass: "sorting",
     attrs: {
       scope: "col",
@@ -5702,7 +5702,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.table td[data-v-64c89bc1], .table th[data-v-64c89bc1] {\n  white-space: normal !important;\n}\n@media (max-width: 1200px) {\n.table td[data-v-64c89bc1], .table th[data-v-64c89bc1] {\n    white-space: nowrap !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.table td[data-v-64c89bc1], .table th[data-v-64c89bc1] {\r\n  white-space: normal !important;\n}\n@media (max-width: 1200px) {\n.table td[data-v-64c89bc1], .table th[data-v-64c89bc1] {\r\n    white-space: nowrap !important;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -5721,7 +5721,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.active[data-v-19420638] {\n  background: #3498db !important;\n  color: #fff !important;\n}\n", ""]);
+exports.push([module.i, "\n.active[data-v-19420638] {\r\n  background: #3498db !important;\r\n  color: #fff !important;\n}\r\n", ""]);
 
 // exports
 
@@ -5740,7 +5740,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.active[data-v-3b5d441c] {\n  background: #3498db !important;\n  color: #fff !important;\n}\n", ""]);
+exports.push([module.i, "\n.active[data-v-3b5d441c] {\r\n  background: #3498db !important;\r\n  color: #fff !important;\n}\r\n", ""]);
 
 // exports
 
@@ -5759,7 +5759,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.table td[data-v-8ddd2b1c], .table th[data-v-8ddd2b1c] {\n  white-space: normal !important;\n}\n@media (max-width: 1200px) {\n.table td[data-v-8ddd2b1c], .table th[data-v-8ddd2b1c] {\n    white-space: nowrap !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.table td[data-v-8ddd2b1c], .table th[data-v-8ddd2b1c] {\r\n  white-space: normal !important;\n}\n@media (max-width: 1200px) {\n.table td[data-v-8ddd2b1c], .table th[data-v-8ddd2b1c] {\r\n    white-space: nowrap !important;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -5778,7 +5778,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.table td[data-v-6b96d1d6],\n.table th[data-v-6b96d1d6] {\n  white-space: normal !important;\n}\n@media (max-width: 1200px) {\n.table td[data-v-6b96d1d6],\n  .table th[data-v-6b96d1d6] {\n    white-space: nowrap !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.table td[data-v-6b96d1d6],\r\n.table th[data-v-6b96d1d6] {\r\n  white-space: normal !important;\n}\n@media (max-width: 1200px) {\n.table td[data-v-6b96d1d6],\r\n  .table th[data-v-6b96d1d6] {\r\n    white-space: nowrap !important;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -5797,7 +5797,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.table td[data-v-73b40bc1],\n.table th[data-v-73b40bc1] {\n  white-space: normal !important;\n}\n@media (max-width: 1200px) {\n.table td[data-v-73b40bc1],\n  .table th[data-v-73b40bc1] {\n    white-space: nowrap !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.table td[data-v-73b40bc1],\r\n.table th[data-v-73b40bc1] {\r\n  white-space: normal !important;\n}\n@media (max-width: 1200px) {\n.table td[data-v-73b40bc1],\r\n  .table th[data-v-73b40bc1] {\r\n    white-space: nowrap !important;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -5816,7 +5816,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.table td[data-v-19456eb2],\n.table th[data-v-19456eb2] {\n  white-space: normal !important;\n}\n@media (max-width: 1200px) {\n.table td[data-v-19456eb2],\n  .table th[data-v-19456eb2] {\n    white-space: nowrap !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.table td[data-v-19456eb2],\r\n.table th[data-v-19456eb2] {\r\n  white-space: normal !important;\n}\n@media (max-width: 1200px) {\n.table td[data-v-19456eb2],\r\n  .table th[data-v-19456eb2] {\r\n    white-space: nowrap !important;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -5835,7 +5835,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.table td[data-v-0dca04af], .table th[data-v-0dca04af] {\n  white-space: normal !important;\n}\n@media (max-width: 1200px) {\n.table td[data-v-0dca04af], .table th[data-v-0dca04af] {\n    white-space: nowrap !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.table td[data-v-0dca04af], .table th[data-v-0dca04af] {\r\n  white-space: normal !important;\n}\n@media (max-width: 1200px) {\n.table td[data-v-0dca04af], .table th[data-v-0dca04af] {\r\n    white-space: nowrap !important;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -5854,7 +5854,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.table td[data-v-42340da4], .table th[data-v-42340da4] {\n  white-space: normal !important;\n}\n@media (max-width: 1200px) {\n.table td[data-v-42340da4], .table th[data-v-42340da4] {\n    white-space: nowrap !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.table td[data-v-42340da4], .table th[data-v-42340da4] {\r\n  white-space: normal !important;\n}\n@media (max-width: 1200px) {\n.table td[data-v-42340da4], .table th[data-v-42340da4] {\r\n    white-space: nowrap !important;\n}\n}\r\n", ""]);
 
 // exports
 

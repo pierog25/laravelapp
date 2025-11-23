@@ -5621,11 +5621,11 @@ var render = function render() {
     staticClass: "form-row"
   }, [_c("div", {
     staticClass: "col-md-4 col-sm-12"
-  }, [_c("strong", [_vm._v("Tipo documento: ")]), _vm._v(_vm._s(_vm.entity.document_type.name) + "\n          ")]), _vm._v(" "), _c("div", {
+  }, [_c("strong", [_vm._v("Tipo documento: ")]), _vm._v(_vm._s(_vm.entity.document_type.name) + "\r\n          ")]), _vm._v(" "), _c("div", {
     staticClass: "col-md-4 col-sm-12"
-  }, [_c("strong", [_vm._v("Nº documento: ")]), _vm._v(_vm._s(_vm.entity.document_number) + "\n          ")]), _vm._v(" "), _c("div", {
+  }, [_c("strong", [_vm._v("Nº documento: ")]), _vm._v(_vm._s(_vm.entity.document_number) + "\r\n          ")]), _vm._v(" "), _c("div", {
     staticClass: "col-md-4 col-sm-12"
-  }, [_c("strong", [_vm._v("Nombre: ")]), _vm._v(_vm._s(_vm.entity.first_name + " " + _vm.entity.last_name) + "\n          ")])])])]) : _vm._e(), _vm._v(" "), _c("div", {
+  }, [_c("strong", [_vm._v("Nombre: ")]), _vm._v(_vm._s(_vm.entity.first_name + " " + _vm.entity.last_name) + "\r\n          ")])])])]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
     attrs: {
       id: "modal-create-entity-customer",
@@ -6339,7 +6339,7 @@ var render = function render() {
           staticClass: "table-responsive"
         }, [_c("table", {
           staticClass: "table table-bordered"
-        }, [_c("tr", [_c("td", [_c("strong", [_vm._v("Cliente:")])]), _vm._v(" "), _c("td", [_vm._v("\n                      " + _vm._s(_vm.item && _vm.item.client ? _vm.item.client.first_name + " " + _vm.item.client.last_name : "") + "\n                    ")])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v("Correo:")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item && _vm.item.client ? _vm.item.client.email : ""))])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v("Teléfono:")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item && _vm.item.client ? _vm.item.client.phone : ""))])])])])])]), _vm._v(" "), _vm._l([_vm.currentPage], function (index) {
+        }, [_c("tr", [_c("td", [_c("strong", [_vm._v("Cliente:")])]), _vm._v(" "), _c("td", [_vm._v("\r\n                      " + _vm._s(_vm.item && _vm.item.client ? _vm.item.client.first_name + " " + _vm.item.client.last_name : "") + "\r\n                    ")])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v("Correo:")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item && _vm.item.client ? _vm.item.client.email : ""))])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v("Teléfono:")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item && _vm.item.client ? _vm.item.client.phone : ""))])])])])])]), _vm._v(" "), _vm._l([_vm.currentPage], function (index) {
           var _vm$productsGroup$_vm, _vm$productsGroup$_vm2;
 
           return _c("div", {
@@ -6352,7 +6352,7 @@ var render = function render() {
             staticClass: "table table-bordered"
           }, [_c("thead", [_c("tr", [_c("th", [_vm._v("Producto " + _vm._s(index + 1))]), _vm._v(" "), _c("th", [_vm._v("Descripción")]), _vm._v(" "), _c("th", [_vm._v("Cantidad")])])]), _vm._v(" "), _c("tbody", [_c("tr", [_c("td", [_c("span", {
             staticClass: "badge badge-success"
-          }, [_vm._v("\n                         " + _vm._s(((_vm$productsGroup$_vm = _vm.productsGroup[_vm.item.details[index].product_id]) === null || _vm$productsGroup$_vm === void 0 ? void 0 : (_vm$productsGroup$_vm2 = _vm$productsGroup$_vm[0]) === null || _vm$productsGroup$_vm2 === void 0 ? void 0 : _vm$productsGroup$_vm2.name) || "No disponible") + "\n                        ")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item.details[index].description))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item.details[index].quantity))])])])])])]), _vm._v(" "), _vm._l(_vm.items[index], function (itemRecurso, index2) {
+          }, [_vm._v("\r\n                         " + _vm._s(((_vm$productsGroup$_vm = _vm.productsGroup[_vm.item.details[index].product_id]) === null || _vm$productsGroup$_vm === void 0 ? void 0 : (_vm$productsGroup$_vm2 = _vm$productsGroup$_vm[0]) === null || _vm$productsGroup$_vm2 === void 0 ? void 0 : _vm$productsGroup$_vm2.name) || "No disponible") + "\r\n                        ")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item.details[index].description))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item.details[index].quantity))])])])])])]), _vm._v(" "), _vm._l(_vm.items[index], function (itemRecurso, index2) {
             return _c("div", {
               key: index2,
               staticClass: "form-row"
@@ -6366,9 +6366,9 @@ var render = function render() {
               }
             }, [_c("span", {
               staticClass: "badge badge-success"
-            }, [_vm._v("\n                            " + _vm._s(itemRecurso.resource) + "\n                          ")])]), _vm._v(" "), _c("td", [_c("span", {
+            }, [_vm._v("\r\n                            " + _vm._s(itemRecurso.resource) + "\r\n                          ")])]), _vm._v(" "), _c("td", [_c("span", {
               staticClass: "badge badge-success"
-            }, [_vm._v("\n                            " + _vm._s(itemRecurso.supplier.name) + "\n                          ")])]), _vm._v(" "), _c("td", [_c("strong", [_vm._v(_vm._s(itemRecurso.cost))])])]), _vm._v(" "), _c("tr", [_c("td", {
+            }, [_vm._v("\r\n                            " + _vm._s(itemRecurso.supplier.name) + "\r\n                          ")])]), _vm._v(" "), _c("td", [_c("strong", [_vm._v(_vm._s(itemRecurso.cost))])])]), _vm._v(" "), _c("tr", [_c("td", {
               attrs: {
                 colspan: "1"
               }
@@ -6986,7 +6986,7 @@ var render = function render() {
           staticClass: "table-responsive"
         }, [_c("table", {
           staticClass: "table table-bordered"
-        }, [_c("tr", [_c("td", [_c("strong", [_vm._v("Cliente:")])]), _vm._v(" "), _c("td", [_vm._v("\n                      " + _vm._s(_vm.item && _vm.item.client ? _vm.item.client.first_name + " " + _vm.item.client.last_name : "") + "\n                    ")])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v("Correo:")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item && _vm.item.client ? _vm.item.client.email : ""))])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v("Teléfono:")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item && _vm.item.client ? _vm.item.client.phone : ""))])])])])])]), _vm._v(" "), _vm._l([_vm.currentPage], function (index) {
+        }, [_c("tr", [_c("td", [_c("strong", [_vm._v("Cliente:")])]), _vm._v(" "), _c("td", [_vm._v("\r\n                      " + _vm._s(_vm.item && _vm.item.client ? _vm.item.client.first_name + " " + _vm.item.client.last_name : "") + "\r\n                    ")])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v("Correo:")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item && _vm.item.client ? _vm.item.client.email : ""))])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v("Teléfono:")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item && _vm.item.client ? _vm.item.client.phone : ""))])])])])])]), _vm._v(" "), _vm._l([_vm.currentPage], function (index) {
           var _vm$productsGroup$_vm, _vm$productsGroup$_vm2;
 
           return _c("div", {
@@ -6999,7 +6999,7 @@ var render = function render() {
             staticClass: "table table-bordered"
           }, [_c("thead", [_c("tr", [_c("th", [_vm._v("Producto " + _vm._s(index + 1))]), _vm._v(" "), _c("th", [_vm._v("Descripción")]), _vm._v(" "), _c("th", [_vm._v("Cantidad")])])]), _vm._v(" "), _c("tbody", [_c("tr", [_c("td", [_c("span", {
             staticClass: "badge badge-success"
-          }, [_vm._v("\n                         " + _vm._s(((_vm$productsGroup$_vm = _vm.productsGroup[_vm.item.details[index].product_id]) === null || _vm$productsGroup$_vm === void 0 ? void 0 : (_vm$productsGroup$_vm2 = _vm$productsGroup$_vm[0]) === null || _vm$productsGroup$_vm2 === void 0 ? void 0 : _vm$productsGroup$_vm2.name) || "No disponible") + "\n                        ")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item.details[index].description))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item.details[index].quantity))])])])])])]), _vm._v(" "), _vm._l(_vm.items[index], function (itemRecurso, index2) {
+          }, [_vm._v("\r\n                         " + _vm._s(((_vm$productsGroup$_vm = _vm.productsGroup[_vm.item.details[index].product_id]) === null || _vm$productsGroup$_vm === void 0 ? void 0 : (_vm$productsGroup$_vm2 = _vm$productsGroup$_vm[0]) === null || _vm$productsGroup$_vm2 === void 0 ? void 0 : _vm$productsGroup$_vm2.name) || "No disponible") + "\r\n                        ")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item.details[index].description))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item.details[index].quantity))])])])])])]), _vm._v(" "), _vm._l(_vm.items[index], function (itemRecurso, index2) {
             return _c("div", {
               key: index2,
               staticClass: "form-row"
@@ -7013,9 +7013,9 @@ var render = function render() {
               }
             }, [_c("span", {
               staticClass: "badge badge-success"
-            }, [_vm._v("\n                            " + _vm._s(itemRecurso.resource) + "\n                          ")])]), _vm._v(" "), _c("td", [_c("span", {
+            }, [_vm._v("\r\n                            " + _vm._s(itemRecurso.resource) + "\r\n                          ")])]), _vm._v(" "), _c("td", [_c("span", {
               staticClass: "badge badge-success"
-            }, [_vm._v("\n                            " + _vm._s(itemRecurso.supplier.name) + "\n                          ")])]), _vm._v(" "), _c("td", [_c("strong", [_vm._v(_vm._s(itemRecurso.cost))])])]), _vm._v(" "), _c("tr", [_c("td", {
+            }, [_vm._v("\r\n                            " + _vm._s(itemRecurso.supplier.name) + "\r\n                          ")])]), _vm._v(" "), _c("td", [_c("strong", [_vm._v(_vm._s(itemRecurso.cost))])])]), _vm._v(" "), _c("tr", [_c("td", {
               attrs: {
                 colspan: "1"
               }
@@ -7737,7 +7737,7 @@ var render = function render() {
           }
         }, [_c("i", {
           staticClass: "fas fa-plus me-2"
-        }), _vm._v(" Producto\n              ")])])]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("button", {
+        }), _vm._v(" Producto\r\n              ")])])]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("button", {
           staticClass: "btn btn-primary",
           attrs: {
             type: "submit",
@@ -8068,7 +8068,7 @@ var render = function render() {
           staticClass: "table-responsive"
         }, [_c("table", {
           staticClass: "table table-bordered"
-        }, [_c("tr", [_c("td", [_c("strong", [_vm._v("Cliente:")])]), _vm._v(" "), _c("td", [_vm._v("\n                      " + _vm._s(_vm.item && _vm.item.client ? _vm.item.client.first_name + " " + _vm.item.client.last_name : "") + "\n                    ")])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v("Correo:")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item && _vm.item.client ? _vm.item.client.email : ""))])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v("Teléfono:")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item && _vm.item.client ? _vm.item.client.phone : ""))])])])])])]), _vm._v(" "), _vm._l([_vm.currentPage], function (index) {
+        }, [_c("tr", [_c("td", [_c("strong", [_vm._v("Cliente:")])]), _vm._v(" "), _c("td", [_vm._v("\r\n                      " + _vm._s(_vm.item && _vm.item.client ? _vm.item.client.first_name + " " + _vm.item.client.last_name : "") + "\r\n                    ")])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v("Correo:")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item && _vm.item.client ? _vm.item.client.email : ""))])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v("Teléfono:")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item && _vm.item.client ? _vm.item.client.phone : ""))])])])])])]), _vm._v(" "), _vm._l([_vm.currentPage], function (index) {
           var _vm$productsGroup$_vm, _vm$productsGroup$_vm2;
 
           return _c("div", {
@@ -8081,7 +8081,7 @@ var render = function render() {
             staticClass: "table table-bordered"
           }, [_c("thead", [_c("tr", [_c("th", [_vm._v("Producto " + _vm._s(index + 1))]), _vm._v(" "), _c("th", [_vm._v("Descripción")]), _vm._v(" "), _c("th", [_vm._v("Cantidad")])])]), _vm._v(" "), _c("tbody", [_c("tr", [_c("td", [_c("span", {
             staticClass: "badge badge-success"
-          }, [_vm._v("\n                         " + _vm._s(((_vm$productsGroup$_vm = _vm.productsGroup[_vm.item.details[index].product_id]) === null || _vm$productsGroup$_vm === void 0 ? void 0 : (_vm$productsGroup$_vm2 = _vm$productsGroup$_vm[0]) === null || _vm$productsGroup$_vm2 === void 0 ? void 0 : _vm$productsGroup$_vm2.name) || "No disponible") + "\n                        ")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item.details[index].description))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item.details[index].quantity))])])])])])]), _vm._v(" "), _vm._l(_vm.items[index], function (itemRecurso, index2) {
+          }, [_vm._v("\r\n                         " + _vm._s(((_vm$productsGroup$_vm = _vm.productsGroup[_vm.item.details[index].product_id]) === null || _vm$productsGroup$_vm === void 0 ? void 0 : (_vm$productsGroup$_vm2 = _vm$productsGroup$_vm[0]) === null || _vm$productsGroup$_vm2 === void 0 ? void 0 : _vm$productsGroup$_vm2.name) || "No disponible") + "\r\n                        ")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item.details[index].description))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item.details[index].quantity))])])])])])]), _vm._v(" "), _vm._l(_vm.items[index], function (itemRecurso, index2) {
             return _c("div", {
               key: index2,
               staticClass: "form-row"
@@ -8096,11 +8096,11 @@ var render = function render() {
               }
             }, [_c("span", {
               staticClass: "badge badge-success"
-            }, [_vm._v("\n                            " + _vm._s(itemRecurso.resource) + "\n                          ")])]), _vm._v(" "), _c("td", {
+            }, [_vm._v("\r\n                            " + _vm._s(itemRecurso.resource) + "\r\n                          ")])]), _vm._v(" "), _c("td", {
               staticClass: "td-resource"
             }, [_c("span", {
               staticClass: "badge badge-success"
-            }, [_vm._v("\n                            " + _vm._s(itemRecurso.supplier.name) + "\n                          ")])]), _vm._v(" "), _c("td", [_c("strong", [_vm._v(_vm._s(itemRecurso.cost))])])]), _vm._v(" "), _c("tr", [_c("td", {
+            }, [_vm._v("\r\n                            " + _vm._s(itemRecurso.supplier.name) + "\r\n                          ")])]), _vm._v(" "), _c("td", [_c("strong", [_vm._v(_vm._s(itemRecurso.cost))])])]), _vm._v(" "), _c("tr", [_c("td", {
               attrs: {
                 colspan: "1"
               }
@@ -8455,7 +8455,7 @@ var render = function render() {
           staticClass: "table-responsive"
         }, [_c("table", {
           staticClass: "table table-bordered"
-        }, [_c("tr", [_c("td", [_c("strong", [_vm._v("Cliente:")])]), _vm._v(" "), _c("td", [_vm._v("\n                      " + _vm._s(_vm.item && _vm.item.client ? _vm.item.client.first_name + " " + _vm.item.client.last_name : "") + "\n                    ")])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v("Correo:")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item && _vm.item.client ? _vm.item.client.email : ""))])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v("Teléfono:")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item && _vm.item.client ? _vm.item.client.phone : ""))])])])])]), _vm._v(" "), _c("div", {
+        }, [_c("tr", [_c("td", [_c("strong", [_vm._v("Cliente:")])]), _vm._v(" "), _c("td", [_vm._v("\r\n                      " + _vm._s(_vm.item && _vm.item.client ? _vm.item.client.first_name + " " + _vm.item.client.last_name : "") + "\r\n                    ")])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v("Correo:")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item && _vm.item.client ? _vm.item.client.email : ""))])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v("Teléfono:")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.item && _vm.item.client ? _vm.item.client.phone : ""))])])])])]), _vm._v(" "), _c("div", {
           staticClass: "col-md-6 mb-2"
         }, [_c("div", {
           staticClass: "table-responsive"
@@ -8474,7 +8474,7 @@ var render = function render() {
             staticClass: "table table-bordered"
           }, [_c("thead", [_c("tr", [_c("th", [_vm._v("Producto " + _vm._s(index + 1))]), _vm._v(" "), _c("th", [_vm._v("Descripción")]), _vm._v(" "), _c("th", [_vm._v("Cantidad")])])]), _vm._v(" "), _c("tbody", [_c("tr", [_c("td", [_c("span", {
             staticClass: "badge badge-success"
-          }, [_vm._v("\n                          " + _vm._s(((_vm$productsGroup$dat = _vm.productsGroup[data.product_id]) === null || _vm$productsGroup$dat === void 0 ? void 0 : (_vm$productsGroup$dat2 = _vm$productsGroup$dat[0]) === null || _vm$productsGroup$dat2 === void 0 ? void 0 : _vm$productsGroup$dat2.name) || "No disponible") + "\n                        ")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.description))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.quantity))])])])])])]), _vm._v(" "), _c("div", {
+          }, [_vm._v("\r\n                          " + _vm._s(((_vm$productsGroup$dat = _vm.productsGroup[data.product_id]) === null || _vm$productsGroup$dat === void 0 ? void 0 : (_vm$productsGroup$dat2 = _vm$productsGroup$dat[0]) === null || _vm$productsGroup$dat2 === void 0 ? void 0 : _vm$productsGroup$dat2.name) || "No disponible") + "\r\n                        ")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.description))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(data.quantity))])])])])])]), _vm._v(" "), _c("div", {
             staticClass: "form-row"
           }, [_c("div", {
             staticClass: "col-md-8 table-responsive mt-3"
@@ -9246,7 +9246,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.img-displayer {\n  max-width: 100%;\n  max-height: 100%;\n  display: block;\n  margin: 0px auto;\n}\n.image-target {\n  width: 100px;\n  height: 100px;\n  background-color: rgba(0, 0, 0, 0.4);\n  border: 1px solid rgba(0, 0, 0, 0.3);\n}\n.file-target {\n  width: 100px;\n  height: 100px;\n  background-color: rgba(0, 0, 0, 0.4);\n  border: 1px solid rgba(0, 0, 0, 0.3);\n  color: white;\n  padding: 20px 0px;\n}\n.deleteButton {\n  cursor: pointer;\n  position: absolute;\n  right: -10px;\n  top: -10px;\n  color: white;\n  display: flex;\n  width: 30px;\n  height: 30px;\n  border-radius: 50%;\n  justify-content: center;\n  align-items: center;\n}\n\n", ""]);
+exports.push([module.i, "\n.img-displayer {\r\n  max-width: 100%;\r\n  max-height: 100%;\r\n  display: block;\r\n  margin: 0px auto;\n}\n.image-target {\r\n  width: 100px;\r\n  height: 100px;\r\n  background-color: rgba(0, 0, 0, 0.4);\r\n  border: 1px solid rgba(0, 0, 0, 0.3);\n}\n.file-target {\r\n  width: 100px;\r\n  height: 100px;\r\n  background-color: rgba(0, 0, 0, 0.4);\r\n  border: 1px solid rgba(0, 0, 0, 0.3);\r\n  color: white;\r\n  padding: 20px 0px;\n}\n.deleteButton {\r\n  cursor: pointer;\r\n  position: absolute;\r\n  right: -10px;\r\n  top: -10px;\r\n  color: white;\r\n  display: flex;\r\n  width: 30px;\r\n  height: 30px;\r\n  border-radius: 50%;\r\n  justify-content: center;\r\n  align-items: center;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -9265,7 +9265,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-xl[data-v-d96403d4] {\n  max-width: 800px;\n}\n@media (min-width: 1200px) {\n.modal-xl[data-v-d96403d4] {\n    max-width: 1140px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.modal-xl[data-v-d96403d4] {\r\n  max-width: 800px;\n}\n@media (min-width: 1200px) {\n.modal-xl[data-v-d96403d4] {\r\n    max-width: 1140px;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -9303,7 +9303,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.table-responsive {\n  position: relative;\n  overflow: visible;\n}\n", ""]);
+exports.push([module.i, "\n.table-responsive {\r\n  position: relative;\r\n  overflow: visible;\n}\r\n", ""]);
 
 // exports
 
@@ -9341,7 +9341,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.table-responsive {\n  position: relative;\n  overflow: visible;\n}\n", ""]);
+exports.push([module.i, "\n.table-responsive {\r\n  position: relative;\r\n  overflow: visible;\n}\r\n", ""]);
 
 // exports
 
@@ -9360,7 +9360,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.table-responsive {\n  position: relative;\n  overflow: visible;\n}\n", ""]);
+exports.push([module.i, "\n.table-responsive {\r\n  position: relative;\r\n  overflow: visible;\n}\r\n", ""]);
 
 // exports
 
@@ -9398,7 +9398,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.table-responsive {\n  overflow-x: auto;\n  -webkit-overflow-scrolling: touch;\n  width: 100%;\n}\n.td-resource span {\n  display: block; /* Opcional para que el badge se adapte verticalmente */\n  max-width: 220px;\n  word-break: break-word;\n  white-space: normal;\n}\n", ""]);
+exports.push([module.i, "\n.table-responsive {\r\n  overflow-x: auto;\r\n  -webkit-overflow-scrolling: touch;\r\n  width: 100%;\n}\n.td-resource span {\r\n  display: block; /* Opcional para que el badge se adapte verticalmente */\r\n  max-width: 220px;\r\n  word-break: break-word;\r\n  white-space: normal;\n}\r\n", ""]);
 
 // exports
 
@@ -9417,7 +9417,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.table-responsive {\n  position: relative;\n  overflow: visible;\n}\n", ""]);
+exports.push([module.i, "\n.table-responsive {\r\n  position: relative;\r\n  overflow: visible;\n}\r\n", ""]);
 
 // exports
 

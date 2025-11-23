@@ -759,7 +759,7 @@ var render = function render() {
     staticClass: "card"
   }, [_c("div", {
     staticClass: "card-header text-center font-weight-bold"
-  }, [_vm._v("\n            Puntajes seleccionados\n          ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\r\n            Puntajes seleccionados\r\n          ")]), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, _vm._l(_vm.scoreTypes, function (type, i) {
     return _c("button", {
@@ -773,7 +773,7 @@ var render = function render() {
           return _vm.selectScoreType(type.value);
         }
       }
-    }, [_vm._v("\n              " + _vm._s(type.label) + "\n            ")]);
+    }, [_vm._v("\r\n              " + _vm._s(type.label) + "\r\n            ")]);
   }), 0)])]), _vm._v(" "), _c("div", {
     staticClass: "col-7 d-flex align-items-center justify-content-center chart-wrapper"
   }, [_c("div", {
@@ -793,7 +793,7 @@ var render = function render() {
     staticClass: "card"
   }, [_c("div", {
     staticClass: "card-header text-center font-weight-bold"
-  }, [_vm._v("\n            Distribuidores seleccionados\n          ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\r\n            Distribuidores seleccionados\r\n          ")]), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, _vm._l(_vm.distributors, function (dist) {
     return _c("button", {
@@ -807,7 +807,7 @@ var render = function render() {
           return _vm.toggleDistributor(dist.id);
         }
       }
-    }, [_vm._v("\n              " + _vm._s(dist.name) + "\n            ")]);
+    }, [_vm._v("\r\n              " + _vm._s(dist.name) + "\r\n            ")]);
   }), 0)])])])]);
 };
 
@@ -858,7 +858,7 @@ var render = function render() {
     staticClass: "card"
   }, [_c("div", {
     staticClass: "card-header text-center font-weight-bold"
-  }, [_vm._v("\n            Puntajes seleccionados\n          ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\r\n            Puntajes seleccionados\r\n          ")]), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, _vm._l(_vm.scoreTypes, function (type, i) {
     return _c("button", {
@@ -872,7 +872,7 @@ var render = function render() {
           return _vm.selectScoreType(type.value);
         }
       }
-    }, [_vm._v("\n              " + _vm._s(type.label) + "\n            ")]);
+    }, [_vm._v("\r\n              " + _vm._s(type.label) + "\r\n            ")]);
   }), 0)])]), _vm._v(" "), _c("div", {
     staticClass: "col-7 d-flex align-items-center justify-content-center chart-wrapper"
   }, [_c("div", {
@@ -889,7 +889,7 @@ var render = function render() {
     staticClass: "card"
   }, [_c("div", {
     staticClass: "card-header text-center font-weight-bold"
-  }, [_vm._v("\n            Rango de fechas\n          ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\r\n            Rango de fechas\r\n          ")]), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, [_c("label", [_vm._v("Desde:")]), _vm._v(" "), _c("input", {
     directives: [{
@@ -993,11 +993,11 @@ var render = function render() {
     staticClass: "card"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "card-body"
-  }, [_vm._v("\n\n              Bienvenido a "), _c("span", {
+  }, [_vm._v("\r\n\r\n              Bienvenido a "), _c("span", {
     staticClass: "h4 text-muted"
   }, [_vm._v(_vm._s(_vm.appName))]), _vm._v(", "), _c("span", {
     staticClass: "h4 text-default"
-  }, [_vm._v(_vm._s(_vm.userLogged.name))]), _vm._v(".\n            ")])])])])])]);
+  }, [_vm._v(_vm._s(_vm.userLogged.name))]), _vm._v(".\r\n            ")])])])])])]);
 };
 
 var staticRenderFns = [function () {
@@ -1391,7 +1391,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.btn.active[data-v-d4f04a6e] {\n  background: #e8f0fe !important; /* fondo azul clarito */\n  color: #0d47a1 !important;      /* texto azul oscuro */\n  border-color: #90caf9 !important; /* opcional: borde suave */\n  font-weight: 600;\n}\n.chart-wrapper[data-v-d4f04a6e] {\n  height: 500px;\n  width: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.btn.active[data-v-d4f04a6e] {\r\n  background: #e8f0fe !important; /* fondo azul clarito */\r\n  color: #0d47a1 !important;      /* texto azul oscuro */\r\n  border-color: #90caf9 !important; /* opcional: borde suave */\r\n  font-weight: 600;\n}\n.chart-wrapper[data-v-d4f04a6e] {\r\n  height: 500px;\r\n  width: 100%;\n}\r\n", ""]);
 
 // exports
 
@@ -1410,7 +1410,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.btn.active[data-v-1350c583] {\n  background: #e8f0fe !important; /* fondo azul clarito */\n  color: #0d47a1 !important;      /* texto azul oscuro */\n  border-color: #90caf9 !important; /* opcional: borde suave */\n  font-weight: 600;\n}\n.chart-wrapper[data-v-1350c583] {\n  height: 100%;\n  width: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.btn.active[data-v-1350c583] {\r\n  background: #e8f0fe !important; /* fondo azul clarito */\r\n  color: #0d47a1 !important;      /* texto azul oscuro */\r\n  border-color: #90caf9 !important; /* opcional: borde suave */\r\n  font-weight: 600;\n}\n.chart-wrapper[data-v-1350c583] {\r\n  height: 100%;\r\n  width: 100%;\n}\r\n", ""]);
 
 // exports
 
