@@ -16,6 +16,8 @@ use App\Reports\ReportContext;
 use App\Reports\DateRangeReport;
 use App\Reports\ClientReport;
 use App\Reports\StatusReport;
+use App\Services\Pricing\BasePrice;
+use App\Services\Pricing\ProfitDecorator;
 
 
 class PreSaleReportController extends Controller
@@ -127,11 +129,17 @@ class PreSaleReportController extends Controller
                     $detail->update(['status' => false]);
                 });
 
-                // Recalcular precio unitario
-                $totalWithMargin = $totalCost * 1.3;
-                $unitPrice = $quantity > 0 ? round($totalWithMargin / $quantity, 2) : 0;
+                // 1. Componente base (precio sin ganancia)
+                $calculator = new BasePrice();
+
+                // 2. Decorator que agrega la ganancia (por ejemplo 30% = 0.30)
+                $calculator = new ProfitDecorator($calculator, 0.30);
+
+                // 3. Calcular el precio unitario final
+                $unitPrice = $calculator->calculate($totalCost, $quantity);
 
                 $preSale->update(['unit_price' => $unitPrice]);
+
 
                 $results[] = $preSale->fresh([
                     'details' => function ($query) {
@@ -149,13 +157,13 @@ class PreSaleReportController extends Controller
             $idFormated = str_pad($order->id, 8, '0', STR_PAD_LEFT);
             $email = $order->client->email;
 
-            Mail::to($email)->send(new NotificacionMailable(
-                $name,
-                "Cotizado",
-                $idFormated,
-                null,
-                null
-            ));
+            // Mail::to($email)->send(new NotificacionMailable(
+            //     $name,
+            //     "Cotizado",
+            //     $idFormated,
+            //     null,
+            //     null
+            // ));
 
             DB::commit();
 
@@ -212,7 +220,7 @@ class PreSaleReportController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+    {   
         $validated = $request->validate([
             'details' => 'required|array|min:1',
             'details.*.order_detail_id' => 'required|exists:order_details,id',
@@ -283,11 +291,18 @@ class PreSaleReportController extends Controller
                     $detail->update(['status' => false]);
                 });
 
-                // Recalcular precio unitario
-                $totalWithMargin = $totalCost * 1.3;
-                $unitPrice = $quantity > 0 ? round($totalWithMargin / $quantity, 2) : 0;
+                // 1. Componente base (precio sin ganancia)
+                $calculator = new BasePrice();
 
+                // 2. Decorator que agrega la ganancia (por ejemplo 30% = 0.30)
+                $calculator = new ProfitDecorator($calculator, 0.30);
+
+                // 3. Calcular el precio unitario final
+                $unitPrice = $calculator->calculate($totalCost, $quantity);
+
+                //dasdsad
                 $preSale->update(['unit_price' => $unitPrice]);
+
 
                 $results[] = $preSale->fresh([
                     'details' => function ($query) {
@@ -349,17 +364,17 @@ class PreSaleReportController extends Controller
     }
 
     public function saveRow(Request $request){
-        if ($request->date_delivery) {
-            $idFormated = str_pad($request->order, 8, '0', STR_PAD_LEFT);
-            $email = $request->client_email;
-            Mail::to($email)->send(new NotificacionMailable(
-                $request->client,
-                "En Marcha",
-                $idFormated,
-                null,
-                null
-            ));
-        }
+        // if ($request->date_delivery) {
+        //     $idFormated = str_pad($request->order, 8, '0', STR_PAD_LEFT);
+        //     $email = $request->client_email;
+        //     Mail::to($email)->send(new NotificacionMailable(
+        //         $request->client,
+        //         "En Marcha",
+        //         $idFormated,
+        //         null,
+        //         null
+        //     ));
+        // }
         $update = PreSaleReportDetail::where('id', $request->id)
             ->update($request->only([
                 'comment_quality',
@@ -575,13 +590,13 @@ class PreSaleReportController extends Controller
         $email = $order->client->email;
 
         // Envía el correo
-        Mail::to($email)->send(new NotificacionMailable(
-            $name,
-            "En Producción",
-            $idFormated,
-            null,
-            null
-        ));
+        // Mail::to($email)->send(new NotificacionMailable(
+        //     $name,
+        //     "En Producción",
+        //     $idFormated,
+        //     null,
+        //     null
+        // ));
 
         // Respuesta exitosa
         return response()->json([
@@ -616,13 +631,13 @@ class PreSaleReportController extends Controller
             $email = $order->client->email;
             $link = "https://jbctextil.com/formulario/".$order->id; // ejemplo
 
-            Mail::to($email)->send(new NotificacionMailable(
-                $name,
-                "Entregado",
-                $idFormated,
-                null,
-                $link      // aquí pasas el link
-            ));
+            // Mail::to($email)->send(new NotificacionMailable(
+            //     $name,
+            //     "Entregado",
+            //     $idFormated,
+            //     null,
+            //     $link      // aquí pasas el link
+            // ));
 
             $update = Order::where("id", $request->id)->update([
                 'order_status' => 'Entregado',

@@ -4627,7 +4627,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, 0); // Calcula el precio con el 30% adicional
 
 
-        return totalCost + totalCost * 0.3;
+        return totalCost + totalCost * 0.5;
       };
     },
     unitPrice: function unitPrice() {
